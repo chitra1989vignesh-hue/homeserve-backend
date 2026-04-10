@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: homeserve-backend
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGO_URI
+        sync: false
+      - key: RAZORPAY_KEY_ID
+        sync: false
+      - key: RAZORPAY_KEY_SECRET
+        sync: false
+      - key: EMAIL_USER
+        sync: false
+      - key: EMAIL_PASS
+        sync: false
+      - key: CALLMEBOT_API_KEY
+        sync: false
+      - key: OWNER_PHONE
+        sync: false
+      - key: FRONTEND_URL
+        sync: false

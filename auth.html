@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>HomeServe — My Account</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<style>
+  :root {
+    --orange: #F97316; --orange-dark: #EA580C; --orange-light: #FED7AA;
+    --orange-glow: #FFF7ED; --black: #0F0F0F; --gray: #6B7280;
+    --gray-light: #F9FAFB; --border: #E5E7EB; --white: #FFFFFF;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--gray-light); color: var(--black); min-height: 100vh; }
+
+  /* NAV */
+  nav {
+    background: #fff; border-bottom: 1px solid var(--border);
+    padding: 0 5%; height: 65px; display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem; text-decoration: none; color: var(--black); }
+  .nav-logo span { color: var(--orange); }
+  .nav-back { font-size: .9rem; color: var(--gray); text-decoration: none; font-weight: 500; }
+  .nav-back:hover { color: var(--orange); }
+
+  /* AUTH CARD */
+  .auth-wrap { min-height: calc(100vh - 65px); display: flex; align-items: center; justify-content: center; padding: 2rem 1rem; }
+  .auth-card { background: #fff; border-radius: 24px; padding: 2.5rem; width: 100%; max-width: 440px; box-shadow: 0 8px 40px rgba(0,0,0,.07); }
+  .auth-logo { text-align: center; margin-bottom: 1.5rem; }
+  .auth-logo h2 { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; }
+  .auth-logo h2 span { color: var(--orange); }
+  .auth-logo p { color: var(--gray); font-size: .9rem; margin-top: .3rem; }
+  .auth-tabs { display: flex; background: var(--gray-light); border-radius: 12px; padding: 4px; margin-bottom: 1.8rem; }
+  .auth-tab { flex: 1; padding: .6rem; text-align: center; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: .9rem; transition: all .2s; color: var(--gray); border: none; background: none; font-family: 'DM Sans', sans-serif; }
+  .auth-tab.active { background: #fff; color: var(--orange); box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+  .form-group { display: flex; flex-direction: column; gap: .4rem; margin-bottom: 1rem; }
+  .form-group label { font-size: .85rem; font-weight: 600; }
+  .form-group input {
+    padding: .8rem 1rem; border: 1.5px solid var(--border); border-radius: 12px;
+    font-family: 'DM Sans', sans-serif; font-size: .95rem; outline: none; width: 100%; transition: border-color .2s, box-shadow .2s;
+  }
+  .form-group input:focus { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(249,115,22,.1); }
+  .btn-auth {
+    width: 100%; padding: .9rem; background: var(--orange); color: #fff; border: none;
+    border-radius: 50px; font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1rem;
+    cursor: pointer; transition: all .2s; margin-top: .5rem;
+  }
+  .btn-auth:hover { background: var(--orange-dark); transform: translateY(-1px); }
+  .btn-auth:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+  .divider { text-align: center; color: var(--gray); font-size: .85rem; margin: 1rem 0; position: relative; }
+  .divider::before, .divider::after { content: ''; position: absolute; top: 50%; width: 42%; height: 1px; background: var(--border); }
+  .divider::before { left: 0; } .divider::after { right: 0; }
+  .btn-google {
+    width: 100%; padding: .85rem; border: 1.5px solid var(--border); background: #fff; border-radius: 50px;
+    display: flex; align-items: center; justify-content: center; gap: .7rem; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: .95rem; transition: all .2s;
+  }
+  .btn-google:hover { border-color: var(--orange); background: var(--orange-glow); }
+  .error-msg { background: #FEF2F2; color: #DC2626; padding: .75rem 1rem; border-radius: 10px; font-size: .85rem; margin-bottom: 1rem; display: none; }
+  .error-msg.show { display: block; }
+
+  /* DASHBOARD */
+  .dashboard { display: none; }
+  .dash-wrap { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
+
+  /* Profile Header */
+  .profile-header {
+    background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+    border-radius: 20px; padding: 2rem; color: #fff; margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+  }
+  .profile-avatar {
+    width: 70px; height: 70px; border-radius: 50%; background: rgba(255,255,255,.25);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; color: #fff; flex-shrink: 0;
+  }
+  .profile-info h2 { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 800; }
+  .profile-info p { opacity: .85; font-size: .9rem; margin-top: .2rem; }
+  .profile-info span { font-size: .8rem; opacity: .7; }
+  .btn-logout {
+    margin-left: auto; background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.3);
+    color: #fff; padding: .5rem 1.2rem; border-radius: 50px; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: .85rem; transition: all .2s;
+  }
+  .btn-logout:hover { background: rgba(255,255,255,.25); }
+
+  /* Stats */
+  .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+  .stat-card { background: #fff; border-radius: 16px; padding: 1.3rem; text-align: center; border: 1px solid var(--border); }
+  .stat-card h3 { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; color: var(--orange); }
+  .stat-card p { font-size: .82rem; color: var(--gray); margin-top: .2rem; }
+
+  /* Sections */
+  .dash-section { background: #fff; border-radius: 20px; padding: 1.5rem; margin-bottom: 1.5rem; border: 1px solid var(--border); }
+  .dash-section h3 { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.2rem; display: flex; align-items: center; gap: .5rem; }
+  .dash-section h3 span { color: var(--orange); }
+
+  /* Booking cards */
+  .booking-card { border: 1px solid var(--border); border-radius: 14px; padding: 1.2rem; margin-bottom: .8rem; transition: all .2s; }
+  .booking-card:hover { border-color: var(--orange); box-shadow: 0 4px 16px rgba(249,115,22,.08); }
+  .booking-card:last-child { margin-bottom: 0; }
+  .booking-top { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .5rem; margin-bottom: .5rem; }
+  .booking-service { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; }
+  .booking-id { font-size: .78rem; color: var(--gray); }
+  .booking-meta { font-size: .85rem; color: var(--gray); display: flex; gap: 1rem; flex-wrap: wrap; }
+  .status-badge { display: inline-block; padding: .25rem .8rem; border-radius: 50px; font-size: .75rem; font-weight: 700; }
+  .status-pending      { background: #FEF3C7; color: #92400E; }
+  .status-confirmed    { background: #D1FAE5; color: #065F46; }
+  .status-in-progress  { background: #DBEAFE; color: #1E40AF; }
+  .status-completed    { background: #F3F4F6; color: #374151; }
+  .status-cancelled    { background: #FEE2E2; color: #991B1B; }
+  .no-bookings { text-align: center; padding: 2rem; color: var(--gray); }
+  .no-bookings p { font-size: .95rem; }
+  .no-bookings a { color: var(--orange); font-weight: 600; text-decoration: none; }
+
+  /* Profile edit form */
+  .profile-form { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .profile-form .full { grid-column: 1 / -1; }
+  .profile-form input {
+    padding: .75rem 1rem; border: 1.5px solid var(--border); border-radius: 12px;
+    font-family: 'DM Sans', sans-serif; font-size: .9rem; outline: none; width: 100%; transition: border-color .2s;
+  }
+  .profile-form input:focus { border-color: var(--orange); }
+  .profile-form label { font-size: .82rem; font-weight: 600; display: block; margin-bottom: .3rem; }
+  .btn-save {
+    background: var(--orange); color: #fff; border: none; padding: .7rem 1.8rem;
+    border-radius: 50px; font-family: 'DM Sans', sans-serif; font-weight: 700; cursor: pointer;
+    font-size: .9rem; transition: all .2s; margin-top: .5rem;
+  }
+  .btn-save:hover { background: var(--orange-dark); }
+
+  /* Book again CTA */
+  .cta-card {
+    background: linear-gradient(135deg, var(--orange-glow), #fff);
+    border: 1px solid var(--orange-light); border-radius: 16px;
+    padding: 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+  }
+  .cta-card h4 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; }
+  .cta-card p { font-size: .85rem; color: var(--gray); margin-top: .2rem; }
+  .btn-book-again {
+    background: var(--orange); color: #fff; text-decoration: none; padding: .65rem 1.5rem;
+    border-radius: 50px; font-weight: 700; font-size: .9rem; white-space: nowrap; transition: all .2s;
+  }
+  .btn-book-again:hover { background: var(--orange-dark); }
+
+  /* Toast */
+  .toast {
+    position: fixed; bottom: 2rem; right: 2rem; background: var(--black); color: #fff;
+    padding: .9rem 1.4rem; border-radius: 14px; font-size: .88rem; font-weight: 500;
+    transform: translateY(100px); opacity: 0; transition: all .4s; z-index: 9999;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  @media (max-width: 600px) {
+    .auth-card { padding: 1.8rem 1.3rem; }
+    .stats-row { grid-template-columns: 1fr 1fr; }
+    .profile-form { grid-template-columns: 1fr; }
+    .profile-form .full { grid-column: auto; }
+    .btn-logout { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Home<span>Serve</span></a>
+  <a href="index.html" class="nav-back">← Back to Home</a>
+</nav>
+
+<!-- AUTH SECTION -->
+<div class="auth-wrap" id="authSection">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <h2>Home<span>Serve</span></h2>
+      <p>Sign in to manage your bookings</p>
+    </div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" onclick="switchTab('login')">Login</button>
+      <button class="auth-tab" onclick="switchTab('signup')">Sign Up</button>
+    </div>
+    <div class="error-msg" id="authError"></div>
+
+    <!-- LOGIN FORM -->
+    <div id="loginForm">
+      <div class="form-group"><label>Email</label><input type="email" id="loginEmail" placeholder="your@email.com"/></div>
+      <div class="form-group"><label>Password</label><input type="password" id="loginPassword" placeholder="Your password"/></div>
+      <button class="btn-auth" id="loginBtn" onclick="loginUser()">Login →</button>
+      <div class="divider">or</div>
+      <button class="btn-google" onclick="googleSignIn()">
+        <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.29-8.16 2.29-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+        Continue with Google
+      </button>
+    </div>
+
+    <!-- SIGNUP FORM -->
+    <div id="signupForm" style="display:none;">
+      <div class="form-group"><label>Full Name *</label><input type="text" id="signupName" placeholder="Your full name"/></div>
+      <div class="form-group"><label>Phone Number *</label><input type="tel" id="signupPhone" placeholder="+91 00000 00000"/></div>
+      <div class="form-group"><label>Email *</label><input type="email" id="signupEmail" placeholder="your@email.com"/></div>
+      <div class="form-group"><label>Password *</label><input type="password" id="signupPassword" placeholder="Min 6 characters"/></div>
+      <button class="btn-auth" id="signupBtn" onclick="signupUser()">Create Account →</button>
+      <div class="divider">or</div>
+      <button class="btn-google" onclick="googleSignIn()">
+        <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.29-8.16 2.29-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+        Continue with Google
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- DASHBOARD SECTION -->
+<div class="dashboard" id="dashSection">
+  <div class="dash-wrap">
+
+    <!-- Profile Header -->
+    <div class="profile-header">
+      <div class="profile-avatar" id="dashAvatar">U</div>
+      <div class="profile-info">
+        <h2 id="dashName">Loading...</h2>
+        <p id="dashEmail"></p>
+        <span id="dashPhone"></span>
+      </div>
+      <button class="btn-logout" onclick="logoutUser()">Logout</button>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-card"><h3 id="statTotal">0</h3><p>Total Bookings</p></div>
+      <div class="stat-card"><h3 id="statActive">0</h3><p>Active Bookings</p></div>
+      <div class="stat-card"><h3 id="statDone">0</h3><p>Completed</p></div>
+    </div>
+
+    <!-- Recent Bookings -->
+    <div class="dash-section">
+      <h3>📋 My <span>Bookings</span></h3>
+      <div id="bookingsList"><p style="color:var(--gray);font-size:.9rem;">Loading bookings...</p></div>
+    </div>
+
+    <!-- Book Again CTA -->
+    <div class="cta-card">
+      <div>
+        <h4>Need another service?</h4>
+        <p>Book cleaning, electrical, plumbing or driver in 60 seconds.</p>
+      </div>
+      <a href="index.html#booking" class="btn-book-again">Book Now →</a>
+    </div>
+
+    <!-- Edit Profile -->
+    <div class="dash-section" style="margin-top:1.5rem;">
+      <h3>👤 Edit <span>Profile</span></h3>
+      <div class="profile-form">
+        <div><label>Full Name</label><input type="text" id="editName" placeholder="Your name"/></div>
+        <div><label>Phone</label><input type="tel" id="editPhone" placeholder="+91 00000 00000"/></div>
+        <div><label>City</label><input type="text" id="editCity" placeholder="Puducherry"/></div>
+        <div class="full"><label>Address</label><input type="text" id="editAddress" placeholder="Door no., street..."/></div>
+      </div>
+      <button class="btn-save" onclick="saveProfile()">Save Changes</button>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  // ╔══════════════════════════════════════════════╗
+  // ║  🔑 REPLACE WITH YOUR FIREBASE CONFIG        ║
+  // ║  Firebase Console → Project Settings →       ║
+  // ║  Your Apps → Web App → Config                ║
+  // ╚══════════════════════════════════════════════╝
+  const firebaseConfig = {
+    apiKey:            "AIzaSyBKRi2_2ZUdnWMySxpkahFwUlyZipsze8w",
+    authDomain:        "homeserve-f78c2.firebaseapp.com",
+    projectId:         "homeserve-f78c2",
+    storageBucket:     "homeserve-f78c2.firebasestorage.app",
+    messagingSenderId: "214421906801",
+    appId:             "1:214421906801:web:b16ecace30abae5b4b82d0",
+    measurementId:     "G-NRXWHCF14G"
+  };
+
+  const API_URL = 'https://your-app.onrender.com'; // 🔑 Your backend URL
+
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+
+  // ── Auth state listener ─────────────────────────
+  auth.onAuthStateChanged(async user => {
+    if (user) {
+      showDashboard(user);
+      await loadDashboardData(user);
+    } else {
+      showAuth();
+    }
+  });
+
+  // ── Tab switch ──────────────────────────────────
+  function switchTab(tab) {
+    document.querySelectorAll('.auth-tab').forEach((t, i) => {
+      t.classList.toggle('active', (tab === 'login' && i === 0) || (tab === 'signup' && i === 1));
+    });
+    document.getElementById('loginForm').style.display  = tab === 'login'  ? 'block' : 'none';
+    document.getElementById('signupForm').style.display = tab === 'signup' ? 'block' : 'none';
+    hideError();
+  }
+
+  // ── Login ───────────────────────────────────────
+  async function loginUser() {
+    const email    = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    if (!email || !password) { showError('Please fill all fields'); return; }
+
+    setLoading('loginBtn', true);
+    try {
+      await auth.signInWithEmailAndPassword(email, password);
+    } catch (err) {
+      showError(getFriendlyError(err.code));
+    } finally {
+      setLoading('loginBtn', false);
+    }
+  }
+
+  // ── Signup ──────────────────────────────────────
+  async function signupUser() {
+    const name     = document.getElementById('signupName').value.trim();
+    const phone    = document.getElementById('signupPhone').value.trim();
+    const email    = document.getElementById('signupEmail').value.trim();
+    const password = document.getElementById('signupPassword').value;
+
+    if (!name || !phone || !email || !password) { showError('Please fill all fields'); return; }
+    if (password.length < 6) { showError('Password must be at least 6 characters'); return; }
+
+    setLoading('signupBtn', true);
+    try {
+      const cred = await auth.createUserWithEmailAndPassword(email, password);
+      await cred.user.updateProfile({ displayName: name });
+
+      // Save extra profile to backend
+      const token = await cred.user.getIdToken();
+      await fetch(API_URL + '/api/users/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+        body: JSON.stringify({ name, phone })
+      });
+    } catch (err) {
+      showError(getFriendlyError(err.code));
+    } finally {
+      setLoading('signupBtn', false);
+    }
+  }
+
+  // ── Google Sign In ──────────────────────────────
+  async function googleSignIn() {
+    try {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      const cred = await auth.signInWithPopup(provider);
+      // If new user, save profile
+      if (cred.additionalUserInfo.isNewUser) {
+        const token = await cred.user.getIdToken();
+        await fetch(API_URL + '/api/users/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+          body: JSON.stringify({ name: cred.user.displayName, phone: '' })
+        });
+      }
+    } catch (err) {
+      showError(getFriendlyError(err.code));
+    }
+  }
+
+  // ── Logout ──────────────────────────────────────
+  async function logoutUser() {
+    await auth.signOut();
+    showToast('Logged out successfully');
+  }
+
+  // ── Load dashboard data ─────────────────────────
+  async function loadDashboardData(user) {
+    try {
+      const token = await user.getIdToken();
+      const res   = await fetch(API_URL + '/api/users/me', {
+        headers: { 'Authorization': 'Bearer ' + token }
+      });
+      const data = await res.json();
+
+      if (data.success) {
+        const u = data.user;
+        document.getElementById('dashName').textContent  = u.name  || user.displayName || 'User';
+        document.getElementById('dashEmail').textContent = u.email || user.email;
+        document.getElementById('dashPhone').textContent = u.phone || '';
+        document.getElementById('dashAvatar').textContent = (u.name || user.displayName || 'U')[0].toUpperCase();
+        document.getElementById('editName').value    = u.name    || '';
+        document.getElementById('editPhone').value   = u.phone   || '';
+        document.getElementById('editCity').value    = u.city    || '';
+        document.getElementById('editAddress').value = u.address || '';
+
+        renderBookings(data.recentBookings || []);
+        updateStats(data.recentBookings || []);
+      }
+    } catch (err) {
+      console.error('Dashboard load error:', err);
+    }
+  }
+
+  // ── Render bookings ─────────────────────────────
+  function renderBookings(bookings) {
+    const container = document.getElementById('bookingsList');
+    if (!bookings.length) {
+      container.innerHTML = `
+        <div class="no-bookings">
+          <p>No bookings yet. <a href="index.html#booking">Book your first service →</a></p>
+        </div>`;
+      return;
+    }
+    const serviceEmoji = { 'House Cleaning':'🧹', 'Electrician':'⚡', 'Plumbing':'🔧', 'Driver':'🚗' };
+    container.innerHTML = bookings.map(b => `
+      <div class="booking-card">
+        <div class="booking-top">
+          <div class="booking-service">${serviceEmoji[b.service] || '🏠'} ${b.service}</div>
+          <span class="status-badge status-${b.status}">${b.status.charAt(0).toUpperCase() + b.status.slice(1)}</span>
+        </div>
+        <div class="booking-meta">
+          <span>📅 ${b.date}${b.time ? ' at ' + b.time : ''}</span>
+          <span>📍 ${b.city}</span>
+          <span style="color:#9CA3AF;font-size:.75rem;">${b.bookingId}</span>
+        </div>
+      </div>`).join('');
+  }
+
+  // ── Stats ───────────────────────────────────────
+  function updateStats(bookings) {
+    document.getElementById('statTotal').textContent  = bookings.length;
+    document.getElementById('statActive').textContent = bookings.filter(b => ['pending','confirmed','in-progress'].includes(b.status)).length;
+    document.getElementById('statDone').textContent   = bookings.filter(b => b.status === 'completed').length;
+  }
+
+  // ── Save profile ────────────────────────────────
+  async function saveProfile() {
+    const user = auth.currentUser;
+    if (!user) return;
+    try {
+      const token = await user.getIdToken();
+      const res = await fetch(API_URL + '/api/users/me', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+        body: JSON.stringify({
+          name:    document.getElementById('editName').value.trim(),
+          phone:   document.getElementById('editPhone').value.trim(),
+          city:    document.getElementById('editCity').value.trim(),
+          address: document.getElementById('editAddress').value.trim()
+        })
+      });
+      const data = await res.json();
+      if (data.success) showToast('Profile updated! ✅');
+      else showToast('Update failed. Try again.');
+    } catch (err) {
+      showToast('Something went wrong.');
+    }
+  }
+
+  // ── UI helpers ──────────────────────────────────
+  function showAuth()      { document.getElementById('authSection').style.display = 'flex'; document.getElementById('dashSection').style.display = 'none'; }
+  function showDashboard() { document.getElementById('authSection').style.display = 'none'; document.getElementById('dashSection').style.display = 'block'; }
+  function showError(msg)  { const e = document.getElementById('authError'); e.textContent = msg; e.classList.add('show'); }
+  function hideError()     { document.getElementById('authError').classList.remove('show'); }
+  function setLoading(id, state) { const b = document.getElementById(id); b.disabled = state; b.textContent = state ? 'Please wait...' : (id === 'loginBtn' ? 'Login →' : 'Create Account →'); }
+
+  function getFriendlyError(code) {
+    const map = {
+      'auth/user-not-found':       'No account found with this email.',
+      'auth/wrong-password':       'Incorrect password. Try again.',
+      'auth/email-already-in-use': 'Email already registered. Please login.',
+      'auth/weak-password':        'Password too weak. Use 6+ characters.',
+      'auth/invalid-email':        'Invalid email address.',
+      'auth/popup-closed-by-user': 'Google sign-in was cancelled.',
+      'auth/network-request-failed': 'Network error. Check your connection.',
+    };
+    return map[code] || 'Something went wrong. Please try again.';
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3500);
+  }
+</script>
+</body>
+</html>

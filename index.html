@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>HomeServe – Home Services at Your Doorstep</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --orange: #F97316;
+    --orange-dark: #EA580C;
+    --orange-light: #FED7AA;
+    --orange-glow: #FFF7ED;
+    --white: #FFFFFF;
+    --black: #0F0F0F;
+    --gray: #6B7280;
+    --gray-light: #F9FAFB;
+    --border: #E5E7EB;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; color: var(--black); background: var(--white); overflow-x: hidden; }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #fff; }
+  ::-webkit-scrollbar-thumb { background: var(--orange); border-radius: 10px; }
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%; height: 70px;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    transition: box-shadow .3s;
+  }
+  nav.scrolled { box-shadow: 0 4px 30px rgba(249,115,22,.08); }
+  .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.5rem; color: var(--black); text-decoration: none; }
+  .nav-logo span { color: var(--orange); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--gray); font-weight: 500; font-size: .95rem; transition: color .2s; }
+  .nav-links a:hover { color: var(--orange); }
+  .nav-cta {
+    background: var(--orange); color: #fff; border: none; padding: .55rem 1.4rem;
+    border-radius: 50px; font-family: 'DM Sans', sans-serif; font-weight: 600;
+    font-size: .9rem; cursor: pointer; transition: background .2s, transform .15s; text-decoration: none;
+  }
+  .nav-cta:hover { background: var(--orange-dark); transform: translateY(-1px); }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+  .hamburger span { width: 24px; height: 2px; background: var(--black); border-radius: 2px; transition: all .3s; }
+  .mobile-menu {
+    display: none; position: fixed; top: 70px; left: 0; right: 0; background: #fff;
+    border-bottom: 1px solid var(--border); padding: 1.5rem 5%; flex-direction: column; gap: 1rem; z-index: 99;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { text-decoration: none; color: var(--black); font-weight: 500; font-size: 1rem; padding: .5rem 0; border-bottom: 1px solid var(--border); }
+  .hero {
+    min-height: 100vh; display: flex; align-items: center;
+    padding: 70px 5% 0;
+    background: linear-gradient(135deg, #FFF7ED 0%, #ffffff 60%, #FFF7ED 100%);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -100px; right: -100px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(249,115,22,.12) 0%, transparent 70%);
+    border-radius: 50%; pointer-events: none;
+  }
+  .hero::after {
+    content: ''; position: absolute; bottom: -80px; left: -80px;
+    width: 350px; height: 350px;
+    background: radial-gradient(circle, rgba(249,115,22,.08) 0%, transparent 70%);
+    border-radius: 50%; pointer-events: none;
+  }
+  .hero-inner { max-width: 1200px; margin: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; width: 100%; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: .5rem;
+    background: var(--orange-light); color: var(--orange-dark); padding: .4rem 1rem;
+    border-radius: 50px; font-size: .82rem; font-weight: 600; margin-bottom: 1.5rem;
+    animation: fadeUp .6s ease both;
+  }
+  .hero-badge::before { content: '✦'; }
+  .hero h1 {
+    font-family: 'Syne', sans-serif; font-size: clamp(2.4rem, 5vw, 3.8rem);
+    font-weight: 800; line-height: 1.1; margin-bottom: 1.2rem;
+    animation: fadeUp .6s .1s ease both;
+  }
+  .hero h1 em { font-style: normal; color: var(--orange); }
+  .hero p {
+    font-size: 1.05rem; color: var(--gray); line-height: 1.7; max-width: 480px;
+    margin-bottom: 2rem; animation: fadeUp .6s .2s ease both;
+  }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; animation: fadeUp .6s .3s ease both; }
+  .btn-primary {
+    background: var(--orange); color: #fff; border: none; padding: .85rem 2rem;
+    border-radius: 50px; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 1rem;
+    cursor: pointer; transition: all .2s; text-decoration: none; display: inline-block;
+    box-shadow: 0 4px 20px rgba(249,115,22,.35);
+  }
+  .btn-primary:hover { background: var(--orange-dark); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(249,115,22,.4); }
+  .btn-secondary {
+    background: transparent; color: var(--black); border: 2px solid var(--border);
+    padding: .85rem 2rem; border-radius: 50px; font-family: 'DM Sans', sans-serif;
+    font-weight: 600; font-size: 1rem; cursor: pointer; transition: all .2s; text-decoration: none; display: inline-block;
+  }
+  .btn-secondary:hover { border-color: var(--orange); color: var(--orange); }
+  .hero-stats { display: flex; gap: 2.5rem; margin-top: 2.5rem; animation: fadeUp .6s .4s ease both; }
+  .stat h3 { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800; color: var(--orange); }
+  .stat p { font-size: .82rem; color: var(--gray); font-weight: 500; }
+  .hero-visual { position: relative; animation: fadeUp .6s .2s ease both; }
+  .hero-card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .service-card-mini {
+    background: #fff; border-radius: 20px; padding: 1.5rem;
+    border: 1px solid var(--border); text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,.04);
+    transition: transform .25s, box-shadow .25s; cursor: pointer;
+  }
+  .service-card-mini:hover { transform: translateY(-4px); box-shadow: 0 12px 35px rgba(249,115,22,.12); }
+  .service-card-mini.featured { background: var(--orange); color: #fff; }
+  .service-icon { font-size: 2rem; margin-bottom: .6rem; display: block; }
+  .service-card-mini h4 { font-family: 'Syne', sans-serif; font-size: .95rem; font-weight: 700; }
+  .service-card-mini p { font-size: .78rem; color: var(--gray); margin-top: .3rem; }
+  .service-card-mini.featured p { color: rgba(255,255,255,.8); }
+  .floating-badge {
+    position: absolute; background: #fff; border-radius: 14px; padding: .7rem 1rem;
+    box-shadow: 0 8px 30px rgba(0,0,0,.1); display: flex; align-items: center; gap: .6rem;
+    font-size: .82rem; font-weight: 600; white-space: nowrap;
+  }
+  .floating-badge.top-left { top: -20px; left: -20px; animation: float 3s ease-in-out infinite; }
+  .floating-badge.bottom-right { bottom: -20px; right: -20px; animation: float 3s 1.5s ease-in-out infinite; }
+  section { padding: 6rem 5%; }
+  .section-label { font-size: .8rem; font-weight: 700; color: var(--orange); letter-spacing: .12em; text-transform: uppercase; margin-bottom: .6rem; }
+  .section-title { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 800; line-height: 1.2; margin-bottom: 1rem; }
+  .section-sub { color: var(--gray); font-size: 1rem; line-height: 1.7; max-width: 560px; }
+  .section-head { text-align: center; margin-bottom: 3.5rem; }
+  .section-head .section-sub { margin: 0 auto; }
+  .how { background: var(--gray-light); }
+  .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; }
+  .step {
+    background: #fff; border-radius: 20px; padding: 2rem;
+    border: 1px solid var(--border); position: relative; overflow: hidden;
+  }
+  .step::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--orange); }
+  .step-num { font-family: 'Syne', sans-serif; font-size: 3rem; font-weight: 800; color: var(--orange-light); line-height: 1; margin-bottom: .8rem; }
+  .step h4 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.05rem; margin-bottom: .5rem; }
+  .step p { font-size: .88rem; color: var(--gray); line-height: 1.6; }
+  .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+  .svc-card {
+    border: 1px solid var(--border); border-radius: 24px; padding: 2rem;
+    transition: all .3s; position: relative; overflow: hidden; background: #fff;
+  }
+  .svc-card::before {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 0;
+    background: linear-gradient(to top, rgba(249,115,22,.05), transparent); transition: height .3s;
+  }
+  .svc-card:hover::before { height: 100%; }
+  .svc-card:hover { border-color: var(--orange); transform: translateY(-4px); box-shadow: 0 16px 40px rgba(249,115,22,.1); }
+  .svc-icon-wrap {
+    width: 60px; height: 60px; border-radius: 16px;
+    background: var(--orange-glow); display: flex; align-items: center; justify-content: center;
+    font-size: 1.8rem; margin-bottom: 1.2rem; transition: background .3s;
+  }
+  .svc-card:hover .svc-icon-wrap { background: var(--orange-light); }
+  .svc-card h3 { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 700; margin-bottom: .5rem; }
+  .svc-card p { color: var(--gray); font-size: .9rem; line-height: 1.6; margin-bottom: 1.2rem; }
+  .svc-price { font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 800; color: var(--orange); }
+  .svc-price span { font-size: .8rem; font-weight: 400; color: var(--gray); }
+  .svc-book {
+    margin-top: 1.2rem; width: 100%; padding: .65rem; border: 2px solid var(--orange);
+    border-radius: 50px; background: transparent; color: var(--orange); font-weight: 600;
+    font-family: 'DM Sans', sans-serif; cursor: pointer; font-size: .9rem; transition: all .2s;
+  }
+  .svc-book:hover { background: var(--orange); color: #fff; }
+  .booking { background: linear-gradient(135deg, #FFF7ED, #fff); }
+  .booking-inner { max-width: 900px; margin: auto; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+  .form-full { grid-column: 1 / -1; }
+  .form-group { display: flex; flex-direction: column; gap: .4rem; }
+  .form-group label { font-size: .85rem; font-weight: 600; color: var(--black); }
+  .form-group input, .form-group select, .form-group textarea {
+    padding: .8rem 1rem; border: 1.5px solid var(--border); border-radius: 12px;
+    font-family: 'DM Sans', sans-serif; font-size: .95rem; color: var(--black);
+    background: #fff; transition: border-color .2s, box-shadow .2s; outline: none; width: 100%;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    border-color: var(--orange); box-shadow: 0 0 0 3px rgba(249,115,22,.1);
+  }
+  .form-group textarea { resize: vertical; min-height: 90px; }
+  .form-card {
+    background: #fff; border-radius: 28px; padding: 2.5rem;
+    border: 1px solid var(--border); box-shadow: 0 8px 40px rgba(0,0,0,.05);
+  }
+  .form-card h3 { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; margin-bottom: 1.8rem; }
+  .form-card h3 span { color: var(--orange); }
+  .payment-section { background: var(--gray-light); }
+  .payment-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; max-width: 800px; margin: 0 auto; }
+  .pay-card {
+    background: #fff; border-radius: 24px; padding: 2rem; text-align: center;
+    border: 2px solid var(--border); transition: all .3s; cursor: pointer;
+  }
+  .pay-card.active, .pay-card:hover { border-color: var(--orange); box-shadow: 0 8px 30px rgba(249,115,22,.12); }
+  .pay-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+  .pay-card h4 { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; margin-bottom: .5rem; }
+  .pay-card p { font-size: .85rem; color: var(--gray); line-height: 1.6; }
+  .pay-badge { display: inline-block; background: var(--orange-light); color: var(--orange-dark); padding: .25rem .75rem; border-radius: 50px; font-size: .75rem; font-weight: 700; margin-top: .8rem; }
+  .testimonials { background: var(--black); color: #fff; }
+  .testimonials .section-label { color: var(--orange); }
+  .testimonials .section-title { color: #fff; }
+  .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+  .review-card { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); border-radius: 20px; padding: 1.8rem; }
+  .stars { color: var(--orange); font-size: 1rem; margin-bottom: .8rem; letter-spacing: 2px; }
+  .review-card p { color: rgba(255,255,255,.75); font-size: .9rem; line-height: 1.7; margin-bottom: 1.2rem; }
+  .reviewer { display: flex; align-items: center; gap: .8rem; }
+  .reviewer-avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--orange); display: flex; align-items: center; justify-content: center; font-weight: 700; font-family: 'Syne', sans-serif; font-size: 1rem; color: #fff; flex-shrink: 0; }
+  .reviewer-name { font-weight: 600; font-size: .9rem; }
+  .reviewer-loc { font-size: .78rem; color: rgba(255,255,255,.45); }
+  .contact-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; max-width: 1100px; margin: auto; }
+  .contact-info h2 { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; margin-bottom: 1rem; }
+  .contact-info p { color: var(--gray); line-height: 1.7; margin-bottom: 2rem; }
+  .contact-item { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.2rem; }
+  .contact-item-icon { width: 46px; height: 46px; border-radius: 12px; background: var(--orange-glow); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+  .contact-item-text strong { display: block; font-weight: 600; font-size: .9rem; }
+  .contact-item-text span { color: var(--gray); font-size: .85rem; }
+  .whatsapp-btn {
+    display: flex; align-items: center; gap: .8rem; background: #25D366; color: #fff;
+    padding: 1rem 1.5rem; border-radius: 14px; text-decoration: none; font-weight: 600;
+    transition: all .2s; margin-top: 1.5rem; width: fit-content;
+    box-shadow: 0 4px 20px rgba(37,211,102,.25);
+  }
+  .whatsapp-btn:hover { background: #1fba5a; transform: translateY(-2px); }
+  footer {
+    background: var(--black); color: rgba(255,255,255,.6); padding: 3rem 5%;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    border-top: 1px solid rgba(255,255,255,.06);
+  }
+  .footer-logo { font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 800; color: #fff; }
+  .footer-logo span { color: var(--orange); }
+  footer p { font-size: .85rem; margin-top: .3rem; }
+  .footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .footer-links a { color: rgba(255,255,255,.5); text-decoration: none; font-size: .85rem; transition: color .2s; }
+  .footer-links a:hover { color: var(--orange); }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 999;
+    display: none; align-items: center; justify-content: center; padding: 1rem;
+    backdrop-filter: blur(4px);
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: #fff; border-radius: 24px; padding: 2.5rem; max-width: 460px; width: 100%;
+    position: relative; animation: fadeUp .3s ease;
+  }
+  .modal-close {
+    position: absolute; top: 1rem; right: 1rem; background: var(--gray-light);
+    border: none; width: 34px; height: 34px; border-radius: 50%; cursor: pointer;
+    font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: background .2s;
+  }
+  .modal-close:hover { background: var(--orange-light); }
+  .modal h3 { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 800; margin-bottom: 1.5rem; }
+  .modal h3 span { color: var(--orange); }
+  .pay-method-btns { display: flex; flex-direction: column; gap: .8rem; }
+  .pay-method-btn {
+    display: flex; align-items: center; gap: 1rem; padding: 1rem 1.2rem;
+    border: 2px solid var(--border); border-radius: 14px; cursor: pointer;
+    background: none; font-family: 'DM Sans', sans-serif; font-size: .95rem; font-weight: 600;
+    transition: all .2s; text-align: left;
+  }
+  .pay-method-btn:hover, .pay-method-btn.selected { border-color: var(--orange); background: var(--orange-glow); }
+  .pay-method-btn .pm-icon { font-size: 1.5rem; }
+  .pay-method-btn .pm-info small { display: block; font-size: .75rem; color: var(--gray); font-weight: 400; }
+  .pay-confirm {
+    margin-top: 1.2rem; width: 100%; padding: .9rem; background: var(--orange); color: #fff;
+    border: none; border-radius: 50px; font-family: 'DM Sans', sans-serif; font-weight: 700;
+    font-size: 1rem; cursor: pointer; transition: background .2s;
+  }
+  .pay-confirm:hover { background: var(--orange-dark); }
+  .pay-confirm:disabled { opacity: .6; cursor: not-allowed; }
+  .toast {
+    position: fixed; bottom: 2rem; right: 2rem; background: var(--black); color: #fff;
+    padding: 1rem 1.5rem; border-radius: 14px; font-size: .9rem; font-weight: 500;
+    transform: translateY(100px); opacity: 0; transition: all .4s; z-index: 9999;
+    display: flex; align-items: center; gap: .7rem; max-width: 320px;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+  .toast::before { content: '✓'; background: var(--orange); width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .75rem; flex-shrink: 0; }
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .hero-visual { order: -1; }
+    .contact-wrap { grid-template-columns: 1fr; gap: 2.5rem; }
+    .form-grid { grid-template-columns: 1fr; }
+    .form-full { grid-column: auto; }
+  }
+  @media (max-width: 640px) {
+    .nav-links, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    section { padding: 4rem 5%; }
+    .hero-stats { gap: 1.5rem; }
+    .hero-card-grid { grid-template-columns: 1fr 1fr; }
+    footer { flex-direction: column; gap: 1.5rem; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="navbar">
+  <a href="#" class="nav-logo">Home<span>Serve</span></a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#booking">Book Now</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#booking" class="nav-cta">Book a Service</a>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#services" onclick="toggleMenu()">Services</a>
+  <a href="#how" onclick="toggleMenu()">How it works</a>
+  <a href="#booking" onclick="toggleMenu()">Book Now</a>
+  <a href="#contact" onclick="toggleMenu()">Contact</a>
+</div>
+
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge">Trusted Home Services</div>
+      <h1>Your Home, <em>Perfectly</em> Taken Care Of</h1>
+      <p>Professional cleaning, electrical, plumbing, and driver services — all at your doorstep. Book in 60 seconds.</p>
+      <div class="hero-btns">
+        <a href="#booking" class="btn-primary">Book Now →</a>
+        <a href="#services" class="btn-secondary">View Services</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><h3>500+</h3><p>Happy Clients</p></div>
+        <div class="stat"><h3>4.9★</h3><p>Avg Rating</p></div>
+        <div class="stat"><h3>2hr</h3><p>Avg Response</p></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="floating-badge top-left">✅ Verified Professionals</div>
+      <div class="hero-card-grid">
+        <div class="service-card-mini featured"><span class="service-icon">🧹</span><h4>Cleaning</h4><p>Deep &amp; regular</p></div>
+        <div class="service-card-mini"><span class="service-icon">⚡</span><h4>Electrical</h4><p>Certified experts</p></div>
+        <div class="service-card-mini"><span class="service-icon">🔧</span><h4>Plumbing</h4><p>Fix &amp; install</p></div>
+        <div class="service-card-mini"><span class="service-icon">🚗</span><h4>Driver</h4><p>On-demand rides</p></div>
+      </div>
+      <div class="floating-badge bottom-right">📍 Available Near You</div>
+    </div>
+  </div>
+</section>
+
+<section class="how" id="how">
+  <div class="section-head">
+    <p class="section-label">Simple Process</p>
+    <h2 class="section-title">How HomeServe Works</h2>
+    <p class="section-sub">From booking to job done — seamlessly simple.</p>
+  </div>
+  <div class="steps-grid" style="max-width:1100px;margin:auto;">
+    <div class="step"><div class="step-num">01</div><h4>Choose a Service</h4><p>Pick from cleaning, electrical, plumbing, or driver.</p></div>
+    <div class="step"><div class="step-num">02</div><h4>Fill the Form</h4><p>Tell us your address, preferred date, and time.</p></div>
+    <div class="step"><div class="step-num">03</div><h4>Confirm &amp; Pay</h4><p>Pay via Razorpay or WhatsApp UPI — 100% secure.</p></div>
+    <div class="step"><div class="step-num">04</div><h4>We Show Up</h4><p>Our verified professional arrives right on time.</p></div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="section-head">
+    <p class="section-label">What We Offer</p>
+    <h2 class="section-title">Our Services</h2>
+    <p class="section-sub">Affordable, reliable, and professional — every time.</p>
+  </div>
+  <div class="services-grid" style="max-width:1100px;margin:auto;">
+    <div class="svc-card">
+      <div class="svc-icon-wrap">🧹</div>
+      <h3>House Cleaning</h3>
+      <p>Deep cleaning, regular upkeep, bathroom &amp; kitchen sanitisation by trained cleaners.</p>
+      <div class="svc-price">₹499 <span>/ session</span></div>
+      <button class="svc-book" onclick="openBooking('House Cleaning')">Book Now</button>
+    </div>
+    <div class="svc-card">
+      <div class="svc-icon-wrap">⚡</div>
+      <h3>Electrician</h3>
+      <p>Wiring, fan/AC installation, switchboard repair, and full home electrical checks.</p>
+      <div class="svc-price">₹349 <span>/ visit</span></div>
+      <button class="svc-book" onclick="openBooking('Electrician')">Book Now</button>
+    </div>
+    <div class="svc-card">
+      <div class="svc-icon-wrap">🔧</div>
+      <h3>Plumbing</h3>
+      <p>Leak repair, pipe fitting, tap installation, drainage fix — fast &amp; reliable.</p>
+      <div class="svc-price">₹299 <span>/ visit</span></div>
+      <button class="svc-book" onclick="openBooking('Plumbing')">Book Now</button>
+    </div>
+    <div class="svc-card">
+      <div class="svc-icon-wrap">🚗</div>
+      <h3>Driver</h3>
+      <p>On-call drivers for daily travel, airport drops, outstation, or vehicle drives.</p>
+      <div class="svc-price">₹199 <span>/ hour</span></div>
+      <button class="svc-book" onclick="openBooking('Driver')">Book Now</button>
+    </div>
+  </div>
+</section>
+
+<section class="booking" id="booking">
+  <div class="booking-inner">
+    <div class="section-head">
+      <p class="section-label">Get Started</p>
+      <h2 class="section-title">Book a Service</h2>
+      <p class="section-sub">Fill out the form and we'll confirm within 30 minutes.</p>
+    </div>
+    <div class="form-card">
+      <h3>Request a <span>Service</span></h3>
+      <div class="form-grid">
+        <div class="form-group"><label>Full Name *</label><input type="text" id="fname" placeholder="Your full name"/></div>
+        <div class="form-group"><label>Phone Number *</label><input type="tel" id="fphone" placeholder="+91 00000 00000"/></div>
+        <div class="form-group"><label>Email Address</label><input type="email" id="femail" placeholder="your@email.com (for confirmation)"/></div>
+        <div class="form-group">
+          <label>Service Needed *</label>
+          <select id="fservice">
+            <option value="">Select a service</option>
+            <option>House Cleaning</option>
+            <option>Electrician</option>
+            <option>Plumbing</option>
+            <option>Driver</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Preferred Date *</label><input type="date" id="fdate"/></div>
+        <div class="form-group"><label>Preferred Time</label><input type="time" id="ftime"/></div>
+        <div class="form-group"><label>City / Area *</label><input type="text" id="fcity" placeholder="e.g. Puducherry, Auroville"/></div>
+        <div class="form-group form-full"><label>Full Address</label><textarea id="faddress" placeholder="Door no., street, landmark..."></textarea></div>
+        <div class="form-group form-full"><label>Additional Notes</label><textarea id="fnotes" placeholder="Any special instructions or details..."></textarea></div>
+      </div>
+      <button class="btn-primary" style="margin-top:1.5rem;width:100%;padding:1rem;font-size:1rem;" onclick="submitBooking()">Proceed to Payment →</button>
+    </div>
+  </div>
+</section>
+
+<section class="payment-section" id="payment">
+  <div class="section-head">
+    <p class="section-label">Secure Checkout</p>
+    <h2 class="section-title">Payment Options</h2>
+    <p class="section-sub">Multiple ways to pay — safe, instant, and hassle-free.</p>
+  </div>
+  <div class="pay-card">
+  <div class="pay-icon">💵</div>
+  <h4>Cash on Service</h4>
+  <p>No advance needed — pay directly to our team when the job is done.</p>
+  <span class="pay-badge">Easy</span>
+</div>
+    <div class="pay-card">
+      <div class="pay-icon">💬</div>
+      <h4>WhatsApp / UPI</h4>
+      <p>Send your booking via WhatsApp and pay directly via UPI. Simple &amp; fast.</p>
+      <span class="pay-badge">Instant</span>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials" id="reviews">
+  <div class="section-head">
+    <p class="section-label">What Clients Say</p>
+    <h2 class="section-title">Loved by Homeowners</h2>
+  </div>
+  <div class="reviews-grid" style="max-width:1100px;margin:auto;">
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p>"The cleaning team was absolutely thorough. My house has never looked this good. Booked again the very next week!"</p>
+      <div class="reviewer"><div class="reviewer-avatar">P</div><div><div class="reviewer-name">Priya Sharma</div><div class="reviewer-loc">Chennai</div></div></div>
+    </div>
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p>"Electrician showed up on time, fixed all my switches in 40 minutes. Professional and reasonably priced. Highly recommend."</p>
+      <div class="reviewer"><div class="reviewer-avatar">R</div><div><div class="reviewer-name">Ravi Kumar</div><div class="reviewer-loc">Puducherry</div></div></div>
+    </div>
+    <div class="review-card">
+      <div class="stars">★★★★☆</div>
+      <p>"Used the driver service for an outstation trip. Very safe and punctual. Will definitely use HomeServe again."</p>
+      <div class="reviewer"><div class="reviewer-avatar">A</div><div><div class="reviewer-name">Anjali Mehta</div><div class="reviewer-loc">Villupuram</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="contact-wrap">
+    <div class="contact-info">
+      <p class="section-label">Get in Touch</p>
+      <h2>We're Here to Help</h2>
+      <p>Have a question or need help choosing a service? Reach us anytime via WhatsApp or the contact details below.</p>
+      <div class="contact-item">
+        <div class="contact-item-icon">📞</div>
+        <div class="contact-item-text"><strong>Phone</strong><span>+91 XXXXX XXXXX</span></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">✉️</div>
+        <div class="contact-item-text"><strong>Email</strong><span>hello@homeserve.in</span></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">📍</div>
+        <div class="contact-item-text"><strong>Location</strong><span>Puducherry, Tamil Nadu, India</span></div>
+      </div>
+      <a href="https://wa.me/91XXXXXXXXXX?text=Hi%2C%20I%20want%20to%20book%20a%20service%20from%20HomeServe" class="whatsapp-btn" target="_blank">
+        <span>💬</span> Chat on WhatsApp
+      </a>
+    </div>
+    <div class="form-card">
+      <h3>Send a <span>Message</span></h3>
+      <div style="display:flex;flex-direction:column;gap:1rem;">
+        <div class="form-group"><label>Name</label><input type="text" id="cname" placeholder="Your name"/></div>
+        <div class="form-group"><label>Email</label><input type="email" id="cemail" placeholder="your@email.com"/></div>
+        <div class="form-group"><label>Message</label><textarea id="cmessage" placeholder="How can we help you?"></textarea></div>
+        <button class="btn-primary" style="padding:.9rem;" onclick="sendContactMessage()">Send Message →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <div class="footer-logo">Home<span>Serve</span></div>
+    <p>Trusted home services at your doorstep.</p>
+  </div>
+  <div class="footer-links">
+    <a href="#services">Services</a>
+    <a href="#booking">Book Now</a>
+    <a href="#contact">Contact</a>
+    <a href="#">Privacy Policy</a>
+  </div>
+</footer>
+
+<div class="modal-overlay" id="payModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h3>Choose <span>Payment</span> Method</h3>
+    <p style="font-size:.85rem;color:#6B7280;margin-bottom:1.2rem;" id="modalServiceName"></p>
+    <div class="pay-method-btns">
+      <button class="pay-method-btn" id="btn-cash" onclick="selectPayMethod('cash')">
+        <span class="pm-icon">💵</span>
+        <div class="pm-info">Cash on Service<small>Pay when our team arrives</small></div>
+      </button>
+      <button class="pay-method-btn" id="btn-whatsapp" onclick="selectPayMethod('whatsapp')">
+        <span class="pm-icon">💬</span>
+        <div class="pm-info">WhatsApp + UPI<small>Pay directly via WhatsApp</small></div>
+      </button>
+    </div>
+    <button class="pay-confirm" id="payConfirmBtn" onclick="confirmPayment()">Confirm Booking →</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  // ╔══════════════════════════════════════════════╗
+  // ║  🔑 REPLACE THESE 3 AFTER BACKEND DEPLOY     ║
+  // ╚══════════════════════════════════════════════╝
+  const API_URL      = 'https://your-app.onrender.com'; // ← Render URL after deploy
+  const OWNER_WA     = '918946016798';                   // ← owner WhatsApp number
+
+  // Nav scroll
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10);
+  });
+
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  let selectedPayMethod = '';
+  let createdBooking    = null;
+
+  function openBooking(service) {
+    document.getElementById('fservice').value = service;
+    document.querySelector('#booking').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function submitBooking() {
+    const name    = document.getElementById('fname').value.trim();
+    const phone   = document.getElementById('fphone').value.trim();
+    const service = document.getElementById('fservice').value;
+    const date    = document.getElementById('fdate').value;
+    const city    = document.getElementById('fcity').value.trim();
+    if (!name || !phone || !service || !date || !city) {
+      showToast('Please fill all required fields ✦'); return;
+    }
+    document.getElementById('modalServiceName').textContent = 'Service: ' + service + ' — ' + name;
+    document.getElementById('payModal').classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('payModal').classList.remove('open');
+    selectedPayMethod = '';
+    document.querySelectorAll('.pay-method-btn').forEach(b => b.classList.remove('selected'));
+  }
+
+  function selectPayMethod(method) {
+    selectedPayMethod = method;
+    document.querySelectorAll('.pay-method-btn').forEach(b => b.classList.remove('selected'));
+    document.getElementById('btn-' + method).classList.add('selected');
+  }
+
+  async function confirmPayment() {
+    if (!selectedPayMethod) { showToast('Please select a payment method first'); return; }
+    const btn = document.getElementById('payConfirmBtn');
+    btn.textContent = 'Processing...';
+    btn.disabled = true;
+    try {
+      const res = await fetch(API_URL + '/api/bookings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name:          document.getElementById('fname').value.trim(),
+          phone:         document.getElementById('fphone').value.trim(),
+          email:         document.getElementById('femail').value.trim(),
+          service:       document.getElementById('fservice').value,
+          date:          document.getElementById('fdate').value,
+          time:          document.getElementById('ftime').value,
+          city:          document.getElementById('fcity').value.trim(),
+          address:       document.getElementById('faddress').value.trim(),
+          notes:         document.getElementById('fnotes').value.trim(),
+          paymentMethod: selectedPayMethod
+        })
+      });
+      const data = await res.json();
+      if (!data.success) throw new Error(data.message || 'Booking failed');
+      createdBooking = data.booking;
+      if (selectedPayMethod === 'cash') {
+  closeModal();
+  showToast('Booking confirmed! Pay cash when our team arrives 💵');
+  resetForm();
+} else {
+  await handleWhatsAppUPI(createdBooking);
+}
+    } catch (err) {
+      console.error(err);
+      fallbackWhatsApp();
+    } finally {
+      btn.textContent = 'Confirm Booking →';
+      btn.disabled = false;
+    }
+  }
+
+  async function handleRazorpay(booking) {
+    const orderRes = await fetch(API_URL + '/api/bookings/razorpay/order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ service: booking.service, bookingId: booking.bookingId })
+    });
+    const { order } = await orderRes.json();
+    const options = {
+      key: RAZORPAY_KEY,
+      amount: order.amount,
+      currency: 'INR',
+      name: 'HomeServe',
+      description: booking.service,
+      order_id: order.id,
+      theme: { color: '#F97316' },
+      prefill: {
+        name:    document.getElementById('fname').value,
+        contact: document.getElementById('fphone').value,
+        email:   document.getElementById('femail').value
+      },
+      handler: async function(response) {
+        const verifyRes = await fetch(API_URL + '/api/bookings/razorpay/verify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(Object.assign({}, response, { bookingId: booking.bookingId }))
+        });
+        const verify = await verifyRes.json();
+        closeModal();
+        showToast(verify.success
+          ? '🎉 Payment done! Booking ID: ' + booking.bookingId
+          : 'Payment done. Contact us with ID: ' + booking.bookingId);
+        if (verify.success) resetForm();
+      },
+      modal: { ondismiss: function() { showToast('Payment cancelled. Booking saved as pending.'); } }
+    };
+    new Razorpay(options).open();
+  }
+
+  async function handleWhatsAppUPI(booking) {
+    const name  = document.getElementById('fname').value;
+    const phone = document.getElementById('fphone').value;
+    const date  = document.getElementById('fdate').value;
+    const city  = document.getElementById('fcity').value;
+    const notes = document.getElementById('fnotes').value;
+    const msg =
+      'Hi HomeServe!%0A%0A' +
+      '*New Booking Request* %F0%9F%8F%A0%0A%0A' +
+      '%F0%9F%93%8B ID: *' + booking.bookingId + '*%0A' +
+      '%F0%9F%91%A4 Name: ' + encodeURIComponent(name) + '%0A' +
+      '%F0%9F%93%9E Phone: ' + encodeURIComponent(phone) + '%0A' +
+      '%F0%9F%9B%A0 Service: ' + encodeURIComponent(booking.service) + '%0A' +
+      '%F0%9F%93%85 Date: ' + encodeURIComponent(date) + '%0A' +
+      '%F0%9F%93%8D City: ' + encodeURIComponent(city) + '%0A' +
+      '%F0%9F%93%9D Notes: ' + encodeURIComponent(notes || 'None') + '%0A%0A' +
+      'Please share UPI details for payment.';
+    window.open('https://wa.me/' + OWNER_WA + '?text=' + msg, '_blank');
+    closeModal();
+    showToast('💬 WhatsApp opened! Booking ID: ' + booking.bookingId);
+    resetForm();
+  }
+
+  function fallbackWhatsApp() {
+    const name    = document.getElementById('fname').value;
+    const phone   = document.getElementById('fphone').value;
+    const service = document.getElementById('fservice').value;
+    const date    = document.getElementById('fdate').value;
+    const city    = document.getElementById('fcity').value;
+    const notes   = document.getElementById('fnotes').value;
+    const msg =
+      'Hi HomeServe!%0A%0A' +
+      '*Booking Request* %F0%9F%8F%A0%0A%0A' +
+      '%F0%9F%91%A4 Name: ' + encodeURIComponent(name) + '%0A' +
+      '%F0%9F%93%9E Phone: ' + encodeURIComponent(phone) + '%0A' +
+      '%F0%9F%9B%A0 Service: ' + encodeURIComponent(service) + '%0A' +
+      '%F0%9F%93%85 Date: ' + encodeURIComponent(date) + '%0A' +
+      '%F0%9F%93%8D City: ' + encodeURIComponent(city) + '%0A' +
+      '%F0%9F%93%9D Notes: ' + encodeURIComponent(notes || 'None');
+    window.open('https://wa.me/' + OWNER_WA + '?text=' + msg, '_blank');
+    closeModal();
+    showToast("Sent to WhatsApp! We'll confirm your booking shortly.");
+    resetForm();
+  }
+
+  function sendContactMessage() {
+    const name    = document.getElementById('cname').value.trim();
+    const email   = document.getElementById('cemail').value.trim();
+    const message = document.getElementById('cmessage').value.trim();
+    if (!name || !message) { showToast('Please fill name and message'); return; }
+    const msg = 'Hi HomeServe!%0A%0AName: ' + encodeURIComponent(name) +
+      '%0AEmail: ' + encodeURIComponent(email) +
+      '%0AMessage: ' + encodeURIComponent(message);
+    window.open('https://wa.me/' + OWNER_WA + '?text=' + msg, '_blank');
+    showToast('Message sent via WhatsApp! 💬');
+  }
+
+  function resetForm() {
+    ['fname','fphone','femail','fservice','fdate','ftime','fcity','faddress','fnotes']
+      .forEach(function(id) { var el = document.getElementById(id); if (el) el.value = ''; });
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 4000);
+  }
+
+  document.getElementById('fdate').min = new Date().toISOString().split('T')[0];
+
+  const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) e.target.style.animation = 'fadeUp .5s ease both';
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.svc-card, .step, .review-card, .pay-card').forEach(function(el) { observer.observe(el); });
+</script>
+</body>
+</html>
