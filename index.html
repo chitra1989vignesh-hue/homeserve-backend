@@ -695,10 +695,14 @@
       '%F0%9F%93%8D City: ' + encodeURIComponent(city) + '%0A' +
       '%F0%9F%93%9D Notes: ' + encodeURIComponent(notes || 'None') + '%0A%0A' +
       'Please share UPI details for payment.';
-    window.open('https://wa.me/' + OWNER_WA + '?text=' + msg, '_blank');
-    closeModal();
-    showToast('💬 WhatsApp opened! Booking ID: ' + booking.bookingId);
-    resetForm();
+    const upiAmounts = {'House Cleaning':'499','Electrician':'349','Plumbing':'299','Driver':'199'};
+const amount = upiAmounts[booking.service] || '299';
+const upiLink = 'upi://pay?pa=leconluke85147@okhdfcbank&pn=HomeServe&am=' + amount + '&cu=INR&tn=' + encodeURIComponent(booking.service + ' - ' + booking.bookingId);
+window.open(upiLink, '_blank');
+setTimeout(() => { window.open('https://wa.me/' + OWNER_WA + '?text=' + msg, '_blank'); }, 1500);
+closeModal();
+showToast('💳 Opening payment app... Booking ID: ' + booking.bookingId);
+resetForm();
   }
 
   function fallbackWhatsApp() {
