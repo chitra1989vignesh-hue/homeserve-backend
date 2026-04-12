@@ -549,7 +549,17 @@
 </div>
 
 <div class="toast" id="toast"></div>
-
+<div id="upiModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;align-items:center;justify-content:center;padding:1rem;">
+  <div style="background:#fff;border-radius:24px;padding:2rem;max-width:380px;width:100%;text-align:center;">
+    <div style="font-size:2.5rem;">✅</div>
+    <h3 style="font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;margin:.8rem 0 .4rem;">Booking Confirmed!</h3>
+    <p style="color:#6B7280;font-size:.85rem;margin-bottom:.5rem;">Your booking ID</p>
+    <p id="upiBookingId" style="color:#F97316;font-weight:800;font-size:1.1rem;margin-bottom:1.5rem;font-family:'Syne',sans-serif;"></p>
+    <a id="upiPayLink" href="#" style="display:block;background:#F97316;color:#fff;padding:1rem;border-radius:50px;font-weight:700;text-decoration:none;font-size:1rem;margin-bottom:.8rem;">💳 Pay Now via UPI</a>
+    <p style="color:#6B7280;font-size:.78rem;margin-bottom:1rem;">Opens GPay / PhonePe / Paytm</p>
+    <button onclick="document.getElementById('upiModal').style.display='none'" style="background:none;border:1.5px solid #E5E7EB;padding:.7rem 2rem;border-radius:50px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.9rem;">Close</button>
+  </div>
+</div>
 <script>
   // ╔══════════════════════════════════════════════╗
   // ║  🔑 REPLACE THESE 3 AFTER BACKEND DEPLOY     ║
@@ -701,11 +711,12 @@ fetch(API_URL + '/health').catch(() => {});
 const amount = upiAmounts[booking.service] || '299';
 const upiLink = 'upi://pay?pa=leconluke85147@okhdfcbank&pn=HomeServe&am=' + amount + '&cu=INR&tn=' + encodeURIComponent(booking.service + ' - ' + booking.bookingId);
 closeModal();
-const toast = document.getElementById('toast');
-toast.innerHTML = '<div style="display:flex;flex-direction:column;gap:8px;width:100%"><div>✅ Booking confirmed! ' + booking.bookingId + '</div><a href="' + upiLink + '" style="background:#F97316;color:#fff;padding:8px 16px;border-radius:20px;text-align:center;font-weight:700;text-decoration:none;display:block;">💳 Pay Now via UPI</a></div>';
-toast.classList.add('show');
-setTimeout(function() { window.open('https://wa.me/' + OWNER_WA + '?text=' + msg, '_blank'); }, 1500);
-setTimeout(function() { toast.classList.remove('show'); }, 8000);
+document.getElementById('upiBookingId').textContent = booking.bookingId;
+document.getElementById('upiPayLink').href = upiLink;
+document.getElementById('upiModal').style.display = 'flex';
+setTimeout(function() { 
+  window.location.href = 'https://wa.me/' + OWNER_WA + '?text=' + msg;
+}, 500);
 resetForm();
   }
 
