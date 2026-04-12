@@ -555,6 +555,8 @@
   // ║  🔑 REPLACE THESE 3 AFTER BACKEND DEPLOY     ║
   // ╚══════════════════════════════════════════════╝
   const API_URL = 'https://homeserve-backend-xlnk.onrender.com'; // ← Render URL after deploy
+  // Wake up backend on page load
+fetch(API_URL + '/health').catch(() => {});
   const OWNER_WA     = '918946016798';                   // ← owner WhatsApp number
 
   // Nav scroll
@@ -698,10 +700,12 @@
     const upiAmounts = {'House Cleaning':'499','Electrician':'349','Plumbing':'299','Driver':'199'};
 const amount = upiAmounts[booking.service] || '299';
 const upiLink = 'upi://pay?pa=leconluke85147@okhdfcbank&pn=HomeServe&am=' + amount + '&cu=INR&tn=' + encodeURIComponent(booking.service + ' - ' + booking.bookingId);
-window.open(upiLink, '_blank');
-setTimeout(() => { window.open('https://wa.me/' + OWNER_WA + '?text=' + msg, '_blank'); }, 1500);
 closeModal();
-showToast('💳 Opening payment app... Booking ID: ' + booking.bookingId);
+const toast = document.getElementById('toast');
+toast.innerHTML = '<div style="display:flex;flex-direction:column;gap:8px;width:100%"><div>✅ Booking confirmed! ' + booking.bookingId + '</div><a href="' + upiLink + '" style="background:#F97316;color:#fff;padding:8px 16px;border-radius:20px;text-align:center;font-weight:700;text-decoration:none;display:block;">💳 Pay Now via UPI</a></div>';
+toast.classList.add('show');
+setTimeout(function() { window.open('https://wa.me/' + OWNER_WA + '?text=' + msg, '_blank'); }, 1500);
+setTimeout(function() { toast.classList.remove('show'); }, 8000);
 resetForm();
   }
 
