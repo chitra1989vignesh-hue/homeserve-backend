@@ -3,7 +3,12 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>HomeServe – Home Services at Your Doorstep</title>
+<title>All Days Manpower Service | Home Services in Puducherry</title>
+<meta name="description" content="All Days Manpower Service — Professional house cleaning, electrician, plumbing and driver services in Puducherry. Book in 60 seconds!"/>
+<meta name="keywords" content="home services puducherry, house cleaning, electrician, plumbing, driver, all days manpower"/>
+<meta property="og:title" content="All Days Manpower Service | Home Services in Puducherry"/>
+<meta property="og:description" content="Professional home services at your doorstep. Book in 60 seconds!"/>
+<meta property="og:type" content="website"/>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
 <style>
   :root {
@@ -23,184 +28,135 @@
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: #fff; }
   ::-webkit-scrollbar-thumb { background: var(--orange); border-radius: 10px; }
+
+  /* ── NAV ── */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
     padding: 0 5%; height: 70px;
-    background: rgba(255,255,255,0.92);
+    background: rgba(255,255,255,0.95);
     backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--border);
     transition: box-shadow .3s;
   }
   nav.scrolled { box-shadow: 0 4px 30px rgba(249,115,22,.08); }
-  .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.5rem; color: var(--black); text-decoration: none; }
-  .nav-logo span { color: var(--orange); }
+  .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.3rem; color: var(--black); text-decoration: none; line-height: 1.2; }
+  .nav-logo span { color: var(--orange); display: block; font-size: .65rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--gray); }
   .nav-links { display: flex; gap: 2rem; list-style: none; }
   .nav-links a { text-decoration: none; color: var(--gray); font-weight: 500; font-size: .95rem; transition: color .2s; }
   .nav-links a:hover { color: var(--orange); }
-  .nav-cta {
-    background: var(--orange); color: #fff; border: none; padding: .55rem 1.4rem;
-    border-radius: 50px; font-family: 'DM Sans', sans-serif; font-weight: 600;
-    font-size: .9rem; cursor: pointer; transition: background .2s, transform .15s; text-decoration: none;
-  }
+  .nav-right { display: flex; align-items: center; gap: .8rem; }
+  .nav-account { background: transparent; color: var(--black); border: 1.5px solid var(--border); padding: .5rem 1.1rem; border-radius: 50px; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: .85rem; cursor: pointer; transition: all .2s; text-decoration: none; }
+  .nav-account:hover { border-color: var(--orange); color: var(--orange); }
+  .nav-cta { background: var(--orange); color: #fff; border: none; padding: .55rem 1.4rem; border-radius: 50px; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: .9rem; cursor: pointer; transition: background .2s, transform .15s; text-decoration: none; }
   .nav-cta:hover { background: var(--orange-dark); transform: translateY(-1px); }
   .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
   .hamburger span { width: 24px; height: 2px; background: var(--black); border-radius: 2px; transition: all .3s; }
-  .mobile-menu {
-    display: none; position: fixed; top: 70px; left: 0; right: 0; background: #fff;
-    border-bottom: 1px solid var(--border); padding: 1.5rem 5%; flex-direction: column; gap: 1rem; z-index: 99;
-  }
+  .mobile-menu { display: none; position: fixed; top: 70px; left: 0; right: 0; background: #fff; border-bottom: 1px solid var(--border); padding: 1.5rem 5%; flex-direction: column; gap: 1rem; z-index: 99; }
   .mobile-menu.open { display: flex; }
   .mobile-menu a { text-decoration: none; color: var(--black); font-weight: 500; font-size: 1rem; padding: .5rem 0; border-bottom: 1px solid var(--border); }
-  .hero {
-    min-height: 100vh; display: flex; align-items: center;
-    padding: 70px 5% 0;
-    background: linear-gradient(135deg, #FFF7ED 0%, #ffffff 60%, #FFF7ED 100%);
-    position: relative; overflow: hidden;
-  }
-  .hero::before {
-    content: ''; position: absolute; top: -100px; right: -100px;
-    width: 500px; height: 500px;
-    background: radial-gradient(circle, rgba(249,115,22,.12) 0%, transparent 70%);
-    border-radius: 50%; pointer-events: none;
-  }
-  .hero::after {
-    content: ''; position: absolute; bottom: -80px; left: -80px;
-    width: 350px; height: 350px;
-    background: radial-gradient(circle, rgba(249,115,22,.08) 0%, transparent 70%);
-    border-radius: 50%; pointer-events: none;
-  }
+
+  /* ── HERO ── */
+  .hero { min-height: 100vh; display: flex; align-items: center; padding: 90px 5% 4rem; background: linear-gradient(135deg, #FFF7ED 0%, #ffffff 60%, #FFF7ED 100%); position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -100px; right: -100px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(249,115,22,.12) 0%, transparent 70%); border-radius: 50%; pointer-events: none; }
   .hero-inner { max-width: 1200px; margin: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; width: 100%; }
-  .hero-badge {
-    display: inline-flex; align-items: center; gap: .5rem;
-    background: var(--orange-light); color: var(--orange-dark); padding: .4rem 1rem;
-    border-radius: 50px; font-size: .82rem; font-weight: 600; margin-bottom: 1.5rem;
-    animation: fadeUp .6s ease both;
-  }
+  .hero-badge { display: inline-flex; align-items: center; gap: .5rem; background: var(--orange-light); color: var(--orange-dark); padding: .4rem 1rem; border-radius: 50px; font-size: .82rem; font-weight: 600; margin-bottom: 1.5rem; animation: fadeUp .6s ease both; }
   .hero-badge::before { content: '✦'; }
-  .hero h1 {
-    font-family: 'Syne', sans-serif; font-size: clamp(2.4rem, 5vw, 3.8rem);
-    font-weight: 800; line-height: 1.1; margin-bottom: 1.2rem;
-    animation: fadeUp .6s .1s ease both;
-  }
+  .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(2.2rem, 4.5vw, 3.5rem); font-weight: 800; line-height: 1.15; margin-bottom: 1.2rem; animation: fadeUp .6s .1s ease both; }
   .hero h1 em { font-style: normal; color: var(--orange); }
-  .hero p {
-    font-size: 1.05rem; color: var(--gray); line-height: 1.7; max-width: 480px;
-    margin-bottom: 2rem; animation: fadeUp .6s .2s ease both;
-  }
+  .hero p { font-size: 1rem; color: var(--gray); line-height: 1.7; max-width: 480px; margin-bottom: 2rem; animation: fadeUp .6s .2s ease both; }
   .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; animation: fadeUp .6s .3s ease both; }
-  .btn-primary {
-    background: var(--orange); color: #fff; border: none; padding: .85rem 2rem;
-    border-radius: 50px; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 1rem;
-    cursor: pointer; transition: all .2s; text-decoration: none; display: inline-block;
-    box-shadow: 0 4px 20px rgba(249,115,22,.35);
-  }
+  .btn-primary { background: var(--orange); color: #fff; border: none; padding: .85rem 2rem; border-radius: 50px; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 1rem; cursor: pointer; transition: all .2s; text-decoration: none; display: inline-block; box-shadow: 0 4px 20px rgba(249,115,22,.35); }
   .btn-primary:hover { background: var(--orange-dark); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(249,115,22,.4); }
-  .btn-secondary {
-    background: transparent; color: var(--black); border: 2px solid var(--border);
-    padding: .85rem 2rem; border-radius: 50px; font-family: 'DM Sans', sans-serif;
-    font-weight: 600; font-size: 1rem; cursor: pointer; transition: all .2s; text-decoration: none; display: inline-block;
-  }
+  .btn-secondary { background: transparent; color: var(--black); border: 2px solid var(--border); padding: .85rem 2rem; border-radius: 50px; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 1rem; cursor: pointer; transition: all .2s; text-decoration: none; display: inline-block; }
   .btn-secondary:hover { border-color: var(--orange); color: var(--orange); }
-  .hero-stats { display: flex; gap: 2.5rem; margin-top: 2.5rem; animation: fadeUp .6s .4s ease both; }
-  .stat h3 { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800; color: var(--orange); }
-  .stat p { font-size: .82rem; color: var(--gray); font-weight: 500; }
-  .hero-visual { position: relative; animation: fadeUp .6s .2s ease both; }
+  .hero-stats { display: flex; gap: 2rem; margin-top: 2.5rem; animation: fadeUp .6s .4s ease both; flex-wrap: wrap; }
+  .stat h3 { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--orange); }
+  .stat p { font-size: .8rem; color: var(--gray); font-weight: 500; }
+  .hero-visual { position: relative; animation: fadeUp .6s .2s ease both; padding: 30px 20px 30px; }
   .hero-card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-  .service-card-mini {
-    background: #fff; border-radius: 20px; padding: 1.5rem;
-    border: 1px solid var(--border); text-align: center;
-    box-shadow: 0 4px 20px rgba(0,0,0,.04);
-    transition: transform .25s, box-shadow .25s; cursor: pointer;
-  }
+  .service-card-mini { background: #fff; border-radius: 20px; padding: 1.2rem; border: 1px solid var(--border); text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,.04); transition: transform .25s, box-shadow .25s; cursor: pointer; }
   .service-card-mini:hover { transform: translateY(-4px); box-shadow: 0 12px 35px rgba(249,115,22,.12); }
   .service-card-mini.featured { background: var(--orange); color: #fff; }
-  .service-icon { font-size: 2rem; margin-bottom: .6rem; display: block; }
-  .service-card-mini h4 { font-family: 'Syne', sans-serif; font-size: .95rem; font-weight: 700; }
-  .service-card-mini p { font-size: .78rem; color: var(--gray); margin-top: .3rem; }
+  .service-icon { font-size: 1.8rem; margin-bottom: .5rem; display: block; }
+  .service-card-mini h4 { font-family: 'Syne', sans-serif; font-size: .9rem; font-weight: 700; }
+  .service-card-mini p { font-size: .75rem; color: var(--gray); margin-top: .25rem; }
   .service-card-mini.featured p { color: rgba(255,255,255,.8); }
-  .floating-badge {
-    position: absolute; background: #fff; border-radius: 14px; padding: .7rem 1rem;
-    box-shadow: 0 8px 30px rgba(0,0,0,.1); display: flex; align-items: center; gap: .6rem;
-    font-size: .82rem; font-weight: 600; white-space: nowrap;
-  }
-  .floating-badge.top-left { top: -20px; left: -20px; animation: float 3s ease-in-out infinite; }
-  .floating-badge.bottom-right { bottom: -20px; right: -20px; animation: float 3s 1.5s ease-in-out infinite; }
+  .floating-badge { position: absolute; background: #fff; border-radius: 14px; padding: .6rem .9rem; box-shadow: 0 8px 30px rgba(0,0,0,.1); display: flex; align-items: center; gap: .5rem; font-size: .78rem; font-weight: 600; white-space: nowrap; z-index: 2; }
+  .floating-badge.top-left { top: 0; left: 0; animation: float 3s ease-in-out infinite; }
+  .floating-badge.bottom-right { bottom: 0; right: 0; animation: float 3s 1.5s ease-in-out infinite; }
+
+  /* ── ABOUT ── */
+  .about { background: var(--black); color: #fff; }
+  .about-inner { max-width: 1100px; margin: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .about .section-label { color: var(--orange); }
+  .about h2 { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 800; color: #fff; margin-bottom: 1rem; line-height: 1.2; }
+  .about p { color: rgba(255,255,255,.7); line-height: 1.8; font-size: .95rem; margin-bottom: 1rem; }
+  .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
+  .about-stat { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); border-radius: 16px; padding: 1.2rem; text-align: center; }
+  .about-stat h3 { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; color: var(--orange); }
+  .about-stat p { font-size: .8rem; color: rgba(255,255,255,.6); margin-top: .3rem; }
+  .about-badges { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.5rem; }
+  .about-badge { background: rgba(249,115,22,.15); color: var(--orange); padding: .4rem 1rem; border-radius: 50px; font-size: .82rem; font-weight: 600; border: 1px solid rgba(249,115,22,.2); }
+
+  /* ── SECTIONS ── */
   section { padding: 6rem 5%; }
   .section-label { font-size: .8rem; font-weight: 700; color: var(--orange); letter-spacing: .12em; text-transform: uppercase; margin-bottom: .6rem; }
   .section-title { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 800; line-height: 1.2; margin-bottom: 1rem; }
   .section-sub { color: var(--gray); font-size: 1rem; line-height: 1.7; max-width: 560px; }
   .section-head { text-align: center; margin-bottom: 3.5rem; }
   .section-head .section-sub { margin: 0 auto; }
+
+  /* ── HOW ── */
   .how { background: var(--gray-light); }
   .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; }
-  .step {
-    background: #fff; border-radius: 20px; padding: 2rem;
-    border: 1px solid var(--border); position: relative; overflow: hidden;
-  }
+  .step { background: #fff; border-radius: 20px; padding: 2rem; border: 1px solid var(--border); position: relative; overflow: hidden; }
   .step::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--orange); }
   .step-num { font-family: 'Syne', sans-serif; font-size: 3rem; font-weight: 800; color: var(--orange-light); line-height: 1; margin-bottom: .8rem; }
   .step h4 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.05rem; margin-bottom: .5rem; }
   .step p { font-size: .88rem; color: var(--gray); line-height: 1.6; }
+
+  /* ── SERVICES ── */
   .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
-  .svc-card {
-    border: 1px solid var(--border); border-radius: 24px; padding: 2rem;
-    transition: all .3s; position: relative; overflow: hidden; background: #fff;
-  }
-  .svc-card::before {
-    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 0;
-    background: linear-gradient(to top, rgba(249,115,22,.05), transparent); transition: height .3s;
-  }
+  .svc-card { border: 1px solid var(--border); border-radius: 24px; padding: 2rem; transition: all .3s; position: relative; overflow: hidden; background: #fff; }
+  .svc-card::before { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 0; background: linear-gradient(to top, rgba(249,115,22,.05), transparent); transition: height .3s; }
   .svc-card:hover::before { height: 100%; }
   .svc-card:hover { border-color: var(--orange); transform: translateY(-4px); box-shadow: 0 16px 40px rgba(249,115,22,.1); }
-  .svc-icon-wrap {
-    width: 60px; height: 60px; border-radius: 16px;
-    background: var(--orange-glow); display: flex; align-items: center; justify-content: center;
-    font-size: 1.8rem; margin-bottom: 1.2rem; transition: background .3s;
-  }
+  .svc-icon-wrap { width: 60px; height: 60px; border-radius: 16px; background: var(--orange-glow); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin-bottom: 1.2rem; transition: background .3s; }
   .svc-card:hover .svc-icon-wrap { background: var(--orange-light); }
   .svc-card h3 { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 700; margin-bottom: .5rem; }
-  .svc-card p { color: var(--gray); font-size: .9rem; line-height: 1.6; margin-bottom: 1.2rem; }
-  .svc-price { font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 800; color: var(--orange); }
+  .svc-card > p { color: var(--gray); font-size: .9rem; line-height: 1.6; margin-bottom: 1rem; }
+  .svc-price { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 800; color: var(--orange); margin-bottom: .8rem; }
   .svc-price span { font-size: .8rem; font-weight: 400; color: var(--gray); }
-  .svc-book {
-    margin-top: 1.2rem; width: 100%; padding: .65rem; border: 2px solid var(--orange);
-    border-radius: 50px; background: transparent; color: var(--orange); font-weight: 600;
-    font-family: 'DM Sans', sans-serif; cursor: pointer; font-size: .9rem; transition: all .2s;
-  }
+  .svc-book { margin-top: .8rem; width: 100%; padding: .65rem; border: 2px solid var(--orange); border-radius: 50px; background: transparent; color: var(--orange); font-weight: 600; font-family: 'DM Sans', sans-serif; cursor: pointer; font-size: .9rem; transition: all .2s; }
   .svc-book:hover { background: var(--orange); color: #fff; }
+
+  /* ── BOOKING ── */
   .booking { background: linear-gradient(135deg, #FFF7ED, #fff); }
   .booking-inner { max-width: 900px; margin: auto; }
   .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
   .form-full { grid-column: 1 / -1; }
   .form-group { display: flex; flex-direction: column; gap: .4rem; }
   .form-group label { font-size: .85rem; font-weight: 600; color: var(--black); }
-  .form-group input, .form-group select, .form-group textarea {
-    padding: .8rem 1rem; border: 1.5px solid var(--border); border-radius: 12px;
-    font-family: 'DM Sans', sans-serif; font-size: .95rem; color: var(--black);
-    background: #fff; transition: border-color .2s, box-shadow .2s; outline: none; width: 100%;
-  }
-  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-    border-color: var(--orange); box-shadow: 0 0 0 3px rgba(249,115,22,.1);
-  }
+  .form-group input, .form-group select, .form-group textarea { padding: .8rem 1rem; border: 1.5px solid var(--border); border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: .95rem; color: var(--black); background: #fff; transition: border-color .2s, box-shadow .2s; outline: none; width: 100%; }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(249,115,22,.1); }
+  .form-group input.error { border-color: #EF4444; }
   .form-group textarea { resize: vertical; min-height: 90px; }
-  .form-card {
-    background: #fff; border-radius: 28px; padding: 2.5rem;
-    border: 1px solid var(--border); box-shadow: 0 8px 40px rgba(0,0,0,.05);
-  }
+  .form-card { background: #fff; border-radius: 28px; padding: 2.5rem; border: 1px solid var(--border); box-shadow: 0 8px 40px rgba(0,0,0,.05); }
   .form-card h3 { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; margin-bottom: 1.8rem; }
   .form-card h3 span { color: var(--orange); }
+
+  /* ── PAYMENT SECTION ── */
   .payment-section { background: var(--gray-light); }
   .payment-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; max-width: 800px; margin: 0 auto; }
-  .pay-card {
-    background: #fff; border-radius: 24px; padding: 2rem; text-align: center;
-    border: 2px solid var(--border); transition: all .3s; cursor: pointer;
-  }
+  .pay-card { background: #fff; border-radius: 24px; padding: 2rem; text-align: center; border: 2px solid var(--border); transition: all .3s; }
   .pay-card.active, .pay-card:hover { border-color: var(--orange); box-shadow: 0 8px 30px rgba(249,115,22,.12); }
   .pay-icon { font-size: 2.5rem; margin-bottom: 1rem; }
   .pay-card h4 { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; margin-bottom: .5rem; }
   .pay-card p { font-size: .85rem; color: var(--gray); line-height: 1.6; }
   .pay-badge { display: inline-block; background: var(--orange-light); color: var(--orange-dark); padding: .25rem .75rem; border-radius: 50px; font-size: .75rem; font-weight: 700; margin-top: .8rem; }
+
+  /* ── TESTIMONIALS ── */
   .testimonials { background: var(--black); color: #fff; }
   .testimonials .section-label { color: var(--orange); }
   .testimonials .section-title { color: #fff; }
@@ -210,8 +166,10 @@
   .review-card p { color: rgba(255,255,255,.75); font-size: .9rem; line-height: 1.7; margin-bottom: 1.2rem; }
   .reviewer { display: flex; align-items: center; gap: .8rem; }
   .reviewer-avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--orange); display: flex; align-items: center; justify-content: center; font-weight: 700; font-family: 'Syne', sans-serif; font-size: 1rem; color: #fff; flex-shrink: 0; }
-  .reviewer-name { font-weight: 600; font-size: .9rem; }
+  .reviewer-name { font-weight: 600; font-size: .9rem; color: #fff; }
   .reviewer-loc { font-size: .78rem; color: rgba(255,255,255,.45); }
+
+  /* ── CONTACT ── */
   .contact-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; max-width: 1100px; margin: auto; }
   .contact-info h2 { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; margin-bottom: 1rem; }
   .contact-info p { color: var(--gray); line-height: 1.7; margin-bottom: 2rem; }
@@ -219,123 +177,135 @@
   .contact-item-icon { width: 46px; height: 46px; border-radius: 12px; background: var(--orange-glow); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
   .contact-item-text strong { display: block; font-weight: 600; font-size: .9rem; }
   .contact-item-text span { color: var(--gray); font-size: .85rem; }
-  .whatsapp-btn {
-    display: flex; align-items: center; gap: .8rem; background: #25D366; color: #fff;
-    padding: 1rem 1.5rem; border-radius: 14px; text-decoration: none; font-weight: 600;
-    transition: all .2s; margin-top: 1.5rem; width: fit-content;
-    box-shadow: 0 4px 20px rgba(37,211,102,.25);
-  }
+  .contact-item-text a { color: var(--gray); text-decoration: none; font-size: .85rem; }
+  .contact-item-text a:hover { color: var(--orange); }
+  .whatsapp-btn { display: flex; align-items: center; gap: .8rem; background: #25D366; color: #fff; padding: 1rem 1.5rem; border-radius: 14px; text-decoration: none; font-weight: 600; transition: all .2s; margin-top: 1.5rem; width: fit-content; box-shadow: 0 4px 20px rgba(37,211,102,.25); }
   .whatsapp-btn:hover { background: #1fba5a; transform: translateY(-2px); }
-  footer {
-    background: var(--black); color: rgba(255,255,255,.6); padding: 3rem 5%;
-    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
-    border-top: 1px solid rgba(255,255,255,.06);
-  }
-  .footer-logo { font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 800; color: #fff; }
-  .footer-logo span { color: var(--orange); }
-  footer p { font-size: .85rem; margin-top: .3rem; }
+
+  /* ── FOOTER ── */
+  footer { background: var(--black); color: rgba(255,255,255,.6); padding: 3rem 5%; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; border-top: 1px solid rgba(255,255,255,.06); }
+  .footer-logo { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 800; color: #fff; line-height: 1.3; }
+  .footer-logo span { display: block; font-size: .65rem; font-weight: 500; color: rgba(255,255,255,.4); text-transform: uppercase; letter-spacing: .08em; }
+  footer p { font-size: .82rem; margin-top: .3rem; }
   .footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
   .footer-links a { color: rgba(255,255,255,.5); text-decoration: none; font-size: .85rem; transition: color .2s; }
   .footer-links a:hover { color: var(--orange); }
+
+  /* ── WHATSAPP FLOAT ── */
+  .wa-float { position: fixed; bottom: 2rem; left: 2rem; z-index: 998; background: #25D366; color: #fff; width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; box-shadow: 0 4px 20px rgba(37,211,102,.4); text-decoration: none; transition: all .2s; animation: float 3s ease-in-out infinite; }
+  .wa-float:hover { background: #1fba5a; transform: scale(1.1); }
+  .wa-float-tooltip { position: absolute; left: 70px; background: var(--black); color: #fff; padding: .4rem .9rem; border-radius: 8px; font-size: .8rem; font-weight: 600; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .2s; }
+  .wa-float:hover .wa-float-tooltip { opacity: 1; }
+
+  /* ── LOADING BANNER ── */
+  .loading-banner { position: fixed; top: 70px; left: 0; right: 0; background: var(--orange); color: #fff; text-align: center; padding: .5rem; font-size: .85rem; font-weight: 600; z-index: 99; display: none; }
+  .loading-banner.show { display: block; }
+
+  /* ── ANIMATIONS ── */
   @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-  .modal-overlay {
-    position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 999;
-    display: none; align-items: center; justify-content: center; padding: 1rem;
-    backdrop-filter: blur(4px);
-  }
+
+  /* ── MODAL ── */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 999; display: none; align-items: center; justify-content: center; padding: 1rem; backdrop-filter: blur(4px); }
   .modal-overlay.open { display: flex; }
-  .modal {
-    background: #fff; border-radius: 24px; padding: 2.5rem; max-width: 460px; width: 100%;
-    position: relative; animation: fadeUp .3s ease;
-  }
-  .modal-close {
-    position: absolute; top: 1rem; right: 1rem; background: var(--gray-light);
-    border: none; width: 34px; height: 34px; border-radius: 50%; cursor: pointer;
-    font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: background .2s;
-  }
+  .modal { background: #fff; border-radius: 24px; padding: 2.5rem; max-width: 460px; width: 100%; position: relative; animation: fadeUp .3s ease; }
+  .modal-close { position: absolute; top: 1rem; right: 1rem; background: var(--gray-light); border: none; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: background .2s; }
   .modal-close:hover { background: var(--orange-light); }
   .modal h3 { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 800; margin-bottom: 1.5rem; }
   .modal h3 span { color: var(--orange); }
   .pay-method-btns { display: flex; flex-direction: column; gap: .8rem; }
-  .pay-method-btn {
-    display: flex; align-items: center; gap: 1rem; padding: 1rem 1.2rem;
-    border: 2px solid var(--border); border-radius: 14px; cursor: pointer;
-    background: none; font-family: 'DM Sans', sans-serif; font-size: .95rem; font-weight: 600;
-    transition: all .2s; text-align: left;
-  }
+  .pay-method-btn { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.2rem; border: 2px solid var(--border); border-radius: 14px; cursor: pointer; background: none; font-family: 'DM Sans', sans-serif; font-size: .95rem; font-weight: 600; transition: all .2s; text-align: left; }
   .pay-method-btn:hover, .pay-method-btn.selected { border-color: var(--orange); background: var(--orange-glow); }
   .pay-method-btn .pm-icon { font-size: 1.5rem; }
   .pay-method-btn .pm-info small { display: block; font-size: .75rem; color: var(--gray); font-weight: 400; }
-  .pay-confirm {
-    margin-top: 1.2rem; width: 100%; padding: .9rem; background: var(--orange); color: #fff;
-    border: none; border-radius: 50px; font-family: 'DM Sans', sans-serif; font-weight: 700;
-    font-size: 1rem; cursor: pointer; transition: background .2s;
-  }
+  .pay-confirm { margin-top: 1.2rem; width: 100%; padding: .9rem; background: var(--orange); color: #fff; border: none; border-radius: 50px; font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1rem; cursor: pointer; transition: background .2s; }
   .pay-confirm:hover { background: var(--orange-dark); }
   .pay-confirm:disabled { opacity: .6; cursor: not-allowed; }
-  .toast {
-    position: fixed; bottom: 2rem; right: 2rem; background: var(--black); color: #fff;
-    padding: 1rem 1.5rem; border-radius: 14px; font-size: .9rem; font-weight: 500;
-    transform: translateY(100px); opacity: 0; transition: all .4s; z-index: 9999;
-    display: flex; align-items: center; gap: .7rem; max-width: 320px;
-  }
+
+  /* ── TOAST ── */
+  .toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--black); color: #fff; padding: 1rem 1.5rem; border-radius: 14px; font-size: .9rem; font-weight: 500; transform: translateY(100px); opacity: 0; transition: all .4s; z-index: 9999; display: flex; align-items: center; gap: .7rem; max-width: 320px; }
   .toast.show { transform: translateY(0); opacity: 1; }
   .toast::before { content: '✓'; background: var(--orange); width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .75rem; flex-shrink: 0; }
+
+  /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
-    .hero-inner { grid-template-columns: 1fr; gap: 3rem; }
-    .hero-visual { order: -1; }
+    .hero-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .hero-visual { order: 2; padding: 20px 10px; }
+    .hero-content { order: 1; }
+    .about-inner { grid-template-columns: 1fr; gap: 2rem; }
     .contact-wrap { grid-template-columns: 1fr; gap: 2.5rem; }
     .form-grid { grid-template-columns: 1fr; }
     .form-full { grid-column: auto; }
   }
   @media (max-width: 640px) {
-    .nav-links, .nav-cta { display: none; }
+    .nav-links, .nav-cta, .nav-account { display: none; }
     .hamburger { display: flex; }
     section { padding: 4rem 5%; }
-    .hero-stats { gap: 1.5rem; }
-    .hero-card-grid { grid-template-columns: 1fr 1fr; }
+    .hero { padding: 80px 5% 3rem; }
+    .hero-stats { gap: 1.2rem; }
+    .hero-card-grid { grid-template-columns: 1fr 1fr; gap: .8rem; }
+    .floating-badge { font-size: .72rem; padding: .5rem .8rem; }
     footer { flex-direction: column; gap: 1.5rem; align-items: flex-start; }
+    .about-stats { grid-template-columns: 1fr 1fr; }
+    .wa-float { bottom: 1.5rem; left: 1.5rem; width: 50px; height: 50px; font-size: 1.4rem; }
   }
 </style>
 </head>
 <body>
 
+<!-- LOADING BANNER -->
+<div class="loading-banner" id="loadingBanner">⏳ Connecting to server, please wait a moment...</div>
+
+<!-- NAV -->
 <nav id="navbar">
-  <a href="#" class="nav-logo">Home<span>Serve</span></a>
+  <a href="#" class="nav-logo">All Days Manpower<span>Home Services · Puducherry</span></a>
   <ul class="nav-links">
+    <li><a href="#about">About</a></li>
     <li><a href="#services">Services</a></li>
     <li><a href="#how">How it works</a></li>
     <li><a href="#booking">Book Now</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <a href="#booking" class="nav-cta">Book a Service</a>
+  <div class="nav-right">
+    <a href="auth.html" class="nav-account">My Account</a>
+    <a href="#booking" class="nav-cta">Book a Service</a>
+  </div>
   <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
 </nav>
 
+<!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="toggleMenu()">About</a>
   <a href="#services" onclick="toggleMenu()">Services</a>
   <a href="#how" onclick="toggleMenu()">How it works</a>
   <a href="#booking" onclick="toggleMenu()">Book Now</a>
   <a href="#contact" onclick="toggleMenu()">Contact</a>
+  <a href="auth.html" onclick="toggleMenu()">My Account</a>
 </div>
 
+<!-- WHATSAPP FLOAT BUTTON -->
+<a href="https://wa.me/917010713811?text=Hi%20All%20Days%20Manpower!%20I%20need%20a%20service." class="wa-float" target="_blank" aria-label="Chat on WhatsApp">
+  💬
+  <span class="wa-float-tooltip">Chat with us!</span>
+</a>
+
+<!-- HERO -->
 <section class="hero" id="home">
   <div class="hero-inner">
     <div class="hero-content">
-      <div class="hero-badge">Trusted Home Services</div>
+      <div class="hero-badge">Trusted Home Services · Puducherry</div>
       <h1>Your Home, <em>Perfectly</em> Taken Care Of</h1>
-      <p>Professional cleaning, electrical, plumbing, and driver services — all at your doorstep. Book in 60 seconds.</p>
+      <p>Professional cleaning, electrical, plumbing, and driver services — all at your doorstep in Puducherry. Book in 60 seconds.</p>
       <div class="hero-btns">
         <a href="#booking" class="btn-primary">Book Now →</a>
         <a href="#services" class="btn-secondary">View Services</a>
       </div>
       <div class="hero-stats">
-        <div class="stat"><h3>500+</h3><p>Happy Clients</p></div>
-        <div class="stat"><h3>4.9★</h3><p>Avg Rating</p></div>
-        <div class="stat"><h3>2hr</h3><p>Avg Response</p></div>
+        <div class="stat"><h3>100%</h3><p>Verified Staff</p></div>
+        <div class="stat"><h3>4 Services</h3><p>Available Daily</p></div>
+        <div class="stat"><h3>30 min</h3><p>Response Time</p></div>
       </div>
     </div>
     <div class="hero-visual">
@@ -346,25 +316,51 @@
         <div class="service-card-mini"><span class="service-icon">🔧</span><h4>Plumbing</h4><p>Fix &amp; install</p></div>
         <div class="service-card-mini"><span class="service-icon">🚗</span><h4>Driver</h4><p>On-demand rides</p></div>
       </div>
-      <div class="floating-badge bottom-right">📍 Available Near You</div>
+      <div class="floating-badge bottom-right">📍 Serving Puducherry</div>
     </div>
   </div>
 </section>
 
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-inner">
+    <div>
+      <p class="section-label">Who We Are</p>
+      <h2>All Days Manpower Service</h2>
+      <p>We are a trusted home services company based in Puducherry, providing professional and reliable services right at your doorstep — all days of the week.</p>
+      <p>Our team of verified and trained professionals handles everything from house cleaning to electrical work, plumbing repairs, and personal driver services.</p>
+      <div class="about-badges">
+        <span class="about-badge">✅ Background Verified Staff</span>
+        <span class="about-badge">📅 Available All Days</span>
+        <span class="about-badge">📍 Puducherry Based</span>
+        <span class="about-badge">⚡ Fast Response</span>
+      </div>
+    </div>
+    <div class="about-stats">
+      <div class="about-stat"><h3>4+</h3><p>Services Offered</p></div>
+      <div class="about-stat"><h3>7</h3><p>Days a Week</p></div>
+      <div class="about-stat"><h3>30m</h3><p>Avg Response</p></div>
+      <div class="about-stat"><h3>100%</h3><p>Satisfaction Goal</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
 <section class="how" id="how">
   <div class="section-head">
     <p class="section-label">Simple Process</p>
-    <h2 class="section-title">How HomeServe Works</h2>
+    <h2 class="section-title">How It Works</h2>
     <p class="section-sub">From booking to job done — seamlessly simple.</p>
   </div>
   <div class="steps-grid" style="max-width:1100px;margin:auto;">
     <div class="step"><div class="step-num">01</div><h4>Choose a Service</h4><p>Pick from cleaning, electrical, plumbing, or driver.</p></div>
     <div class="step"><div class="step-num">02</div><h4>Fill the Form</h4><p>Tell us your address, preferred date, and time.</p></div>
-    <div class="step"><div class="step-num">03</div><h4>Confirm &amp; Pay</h4><p>Pay via Razorpay or WhatsApp UPI — 100% secure.</p></div>
+    <div class="step"><div class="step-num">03</div><h4>Confirm &amp; Pay</h4><p>Pay via UPI or Cash when our team arrives.</p></div>
     <div class="step"><div class="step-num">04</div><h4>We Show Up</h4><p>Our verified professional arrives right on time.</p></div>
   </div>
 </section>
 
+<!-- SERVICES -->
 <section id="services">
   <div class="section-head">
     <p class="section-label">What We Offer</p>
@@ -376,33 +372,34 @@
       <div class="svc-icon-wrap">🧹</div>
       <h3>House Cleaning</h3>
       <p>Deep cleaning, regular upkeep, bathroom &amp; kitchen sanitisation by trained cleaners.</p>
-      <div class="svc-price">₹499 <span>/ session</span></div>
+      <div class="svc-price">₹499 <span>/ session onwards</span></div>
       <button class="svc-book" onclick="openBooking('House Cleaning')">Book Now</button>
     </div>
     <div class="svc-card">
       <div class="svc-icon-wrap">⚡</div>
       <h3>Electrician</h3>
       <p>Wiring, fan/AC installation, switchboard repair, and full home electrical checks.</p>
-      <div class="svc-price">₹349 <span>/ visit</span></div>
+      <div class="svc-price">₹349 <span>/ visit onwards</span></div>
       <button class="svc-book" onclick="openBooking('Electrician')">Book Now</button>
     </div>
     <div class="svc-card">
       <div class="svc-icon-wrap">🔧</div>
       <h3>Plumbing</h3>
       <p>Leak repair, pipe fitting, tap installation, drainage fix — fast &amp; reliable.</p>
-      <div class="svc-price">₹299 <span>/ visit</span></div>
+      <div class="svc-price">₹299 <span>/ visit onwards</span></div>
       <button class="svc-book" onclick="openBooking('Plumbing')">Book Now</button>
     </div>
     <div class="svc-card">
       <div class="svc-icon-wrap">🚗</div>
       <h3>Driver</h3>
       <p>On-call drivers for daily travel, airport drops, outstation, or vehicle drives.</p>
-      <div class="svc-price">₹199 <span>/ hour</span></div>
+      <div class="svc-price">₹199 <span>/ hour onwards</span></div>
       <button class="svc-book" onclick="openBooking('Driver')">Book Now</button>
     </div>
   </div>
 </section>
 
+<!-- BOOKING -->
 <section class="booking" id="booking">
   <div class="booking-inner">
     <div class="section-head">
@@ -437,27 +434,30 @@
   </div>
 </section>
 
+<!-- PAYMENT OPTIONS -->
 <section class="payment-section" id="payment">
   <div class="section-head">
     <p class="section-label">Secure Checkout</p>
     <h2 class="section-title">Payment Options</h2>
     <p class="section-sub">Multiple ways to pay — safe, instant, and hassle-free.</p>
   </div>
-  <div class="pay-card">
-  <div class="pay-icon">💵</div>
-  <h4>Cash on Service</h4>
-  <p>No advance needed — pay directly to our team when the job is done.</p>
-  <span class="pay-badge">Easy</span>
-</div>
+  <div class="payment-options">
+    <div class="pay-card active">
+      <div class="pay-icon">💵</div>
+      <h4>Cash on Service</h4>
+      <p>No advance needed — pay directly to our team when the job is done.</p>
+      <span class="pay-badge">Easy</span>
+    </div>
     <div class="pay-card">
       <div class="pay-icon">💬</div>
-      <h4>WhatsApp / UPI</h4>
-      <p>Send your booking via WhatsApp and pay directly via UPI. Simple &amp; fast.</p>
+      <h4>WhatsApp + UPI</h4>
+      <p>Book via WhatsApp and pay directly using GPay, PhonePe, or any UPI app.</p>
       <span class="pay-badge">Instant</span>
     </div>
   </div>
 </section>
 
+<!-- TESTIMONIALS -->
 <section class="testimonials" id="reviews">
   <div class="section-head">
     <p class="section-label">What Clients Say</p>
@@ -467,7 +467,7 @@
     <div class="review-card">
       <div class="stars">★★★★★</div>
       <p>"The cleaning team was absolutely thorough. My house has never looked this good. Booked again the very next week!"</p>
-      <div class="reviewer"><div class="reviewer-avatar">P</div><div><div class="reviewer-name">Priya Sharma</div><div class="reviewer-loc">Chennai</div></div></div>
+      <div class="reviewer"><div class="reviewer-avatar">P</div><div><div class="reviewer-name">Priya Sharma</div><div class="reviewer-loc">Puducherry</div></div></div>
     </div>
     <div class="review-card">
       <div class="stars">★★★★★</div>
@@ -476,12 +476,13 @@
     </div>
     <div class="review-card">
       <div class="stars">★★★★☆</div>
-      <p>"Used the driver service for an outstation trip. Very safe and punctual. Will definitely use HomeServe again."</p>
+      <p>"Used the driver service for an outstation trip. Very safe and punctual. Will definitely use All Days Manpower again."</p>
       <div class="reviewer"><div class="reviewer-avatar">A</div><div><div class="reviewer-name">Anjali Mehta</div><div class="reviewer-loc">Villupuram</div></div></div>
     </div>
   </div>
 </section>
 
+<!-- CONTACT -->
 <section id="contact">
   <div class="contact-wrap">
     <div class="contact-info">
@@ -490,17 +491,21 @@
       <p>Have a question or need help choosing a service? Reach us anytime via WhatsApp or the contact details below.</p>
       <div class="contact-item">
         <div class="contact-item-icon">📞</div>
-        <div class="contact-item-text"><strong>Phone</strong><span>+91 XXXXX XXXXX</span></div>
+        <div class="contact-item-text"><strong>Phone</strong><a href="tel:+917010713811">+91 70107 13811</a></div>
       </div>
       <div class="contact-item">
         <div class="contact-item-icon">✉️</div>
-        <div class="contact-item-text"><strong>Email</strong><span>hello@homeserve.in</span></div>
+        <div class="contact-item-text"><strong>Email</strong><span>alldaysmanpower@gmail.com</span></div>
       </div>
       <div class="contact-item">
         <div class="contact-item-icon">📍</div>
         <div class="contact-item-text"><strong>Location</strong><span>Puducherry, Tamil Nadu, India</span></div>
       </div>
-      <a href="https://wa.me/91XXXXXXXXXX?text=Hi%2C%20I%20want%20to%20book%20a%20service%20from%20HomeServe" class="whatsapp-btn" target="_blank">
+      <div class="contact-item">
+        <div class="contact-item-icon">🕐</div>
+        <div class="contact-item-text"><strong>Working Hours</strong><span>All Days — 8:00 AM to 8:00 PM</span></div>
+      </div>
+      <a href="https://wa.me/917010713811?text=Hi%20All%20Days%20Manpower!%20I%20want%20to%20book%20a%20service." class="whatsapp-btn" target="_blank">
         <span>💬</span> Chat on WhatsApp
       </a>
     </div>
@@ -516,19 +521,22 @@
   </div>
 </section>
 
+<!-- FOOTER -->
 <footer>
   <div>
-    <div class="footer-logo">Home<span>Serve</span></div>
+    <div class="footer-logo">All Days Manpower Service<span>Professional Home Services · Puducherry</span></div>
     <p>Trusted home services at your doorstep.</p>
   </div>
   <div class="footer-links">
+    <a href="#about">About</a>
     <a href="#services">Services</a>
     <a href="#booking">Book Now</a>
     <a href="#contact">Contact</a>
-    <a href="#">Privacy Policy</a>
+    <a href="auth.html">My Account</a>
   </div>
 </footer>
 
+<!-- PAYMENT MODAL -->
 <div class="modal-overlay" id="payModal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal()">✕</button>
@@ -541,14 +549,14 @@
       </button>
       <button class="pay-method-btn" id="btn-whatsapp" onclick="selectPayMethod('whatsapp')">
         <span class="pm-icon">💬</span>
-        <div class="pm-info">WhatsApp + UPI<small>Pay directly via WhatsApp</small></div>
+        <div class="pm-info">WhatsApp + UPI<small>Pay via GPay / PhonePe / UPI</small></div>
       </button>
     </div>
     <button class="pay-confirm" id="payConfirmBtn" onclick="confirmPayment()">Confirm Booking →</button>
   </div>
 </div>
 
-<div class="toast" id="toast"></div>
+<!-- UPI CONFIRMATION MODAL -->
 <div id="upiModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;align-items:center;justify-content:center;padding:1rem;">
   <div style="background:#fff;border-radius:24px;padding:2rem;max-width:380px;width:100%;text-align:center;">
     <div style="font-size:2.5rem;">✅</div>
@@ -560,14 +568,21 @@
     <button onclick="document.getElementById('upiModal').style.display='none'" style="background:none;border:1.5px solid #E5E7EB;padding:.7rem 2rem;border-radius:50px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.9rem;">Close</button>
   </div>
 </div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
 <script>
-  // ╔══════════════════════════════════════════════╗
-  // ║  🔑 REPLACE THESE 3 AFTER BACKEND DEPLOY     ║
-  // ╚══════════════════════════════════════════════╝
-  const API_URL = 'https://homeserve-backend-xlnk.onrender.com'; // ← Render URL after deploy
-  // Wake up backend on page load
-fetch(API_URL + '/health').catch(() => {});
-  const OWNER_WA     = '918946016798';                   // ← owner WhatsApp number
+  const API_URL  = 'https://homeserve-backend-xlnk.onrender.com';
+  const OWNER_WA = '917010713811';
+
+  // Wake up backend + show loading banner if slow
+  let backendReady = false;
+  const loadingBanner = document.getElementById('loadingBanner');
+  const wakeTimer = setTimeout(() => { if (!backendReady) loadingBanner.classList.add('show'); }, 2000);
+  fetch(API_URL + '/health')
+    .then(() => { backendReady = true; clearTimeout(wakeTimer); loadingBanner.classList.remove('show'); })
+    .catch(() => { clearTimeout(wakeTimer); loadingBanner.classList.remove('show'); });
 
   // Nav scroll
   window.addEventListener('scroll', () => {
@@ -586,15 +601,28 @@ fetch(API_URL + '/health').catch(() => {});
     document.querySelector('#booking').scrollIntoView({ behavior: 'smooth' });
   }
 
+  // Phone validation
+  function validatePhone(phone) {
+    const cleaned = phone.replace(/\s+/g, '').replace('+', '');
+    return /^[6-9]\d{9}$/.test(cleaned) || /^91[6-9]\d{9}$/.test(cleaned);
+  }
+
   function submitBooking() {
     const name    = document.getElementById('fname').value.trim();
     const phone   = document.getElementById('fphone').value.trim();
     const service = document.getElementById('fservice').value;
     const date    = document.getElementById('fdate').value;
     const city    = document.getElementById('fcity').value.trim();
+
     if (!name || !phone || !service || !date || !city) {
       showToast('Please fill all required fields ✦'); return;
     }
+    if (!validatePhone(phone)) {
+      showToast('Please enter a valid 10-digit phone number');
+      document.getElementById('fphone').classList.add('error');
+      return;
+    }
+    document.getElementById('fphone').classList.remove('error');
     document.getElementById('modalServiceName').textContent = 'Service: ' + service + ' — ' + name;
     document.getElementById('payModal').classList.add('open');
   }
@@ -637,12 +665,12 @@ fetch(API_URL + '/health').catch(() => {});
       if (!data.success) throw new Error(data.message || 'Booking failed');
       createdBooking = data.booking;
       if (selectedPayMethod === 'cash') {
-  closeModal();
-  showToast('Booking confirmed! Pay cash when our team arrives 💵');
-  resetForm();
-} else {
-  await handleWhatsAppUPI(createdBooking);
-}
+        closeModal();
+        showToast('Booking confirmed! Pay cash when our team arrives 💵');
+        resetForm();
+      } else {
+        await handleWhatsAppUPI(createdBooking);
+      }
     } catch (err) {
       console.error(err);
       fallbackWhatsApp();
@@ -652,44 +680,6 @@ fetch(API_URL + '/health').catch(() => {});
     }
   }
 
-  async function handleRazorpay(booking) {
-    const orderRes = await fetch(API_URL + '/api/bookings/razorpay/order', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ service: booking.service, bookingId: booking.bookingId })
-    });
-    const { order } = await orderRes.json();
-    const options = {
-      key: RAZORPAY_KEY,
-      amount: order.amount,
-      currency: 'INR',
-      name: 'HomeServe',
-      description: booking.service,
-      order_id: order.id,
-      theme: { color: '#F97316' },
-      prefill: {
-        name:    document.getElementById('fname').value,
-        contact: document.getElementById('fphone').value,
-        email:   document.getElementById('femail').value
-      },
-      handler: async function(response) {
-        const verifyRes = await fetch(API_URL + '/api/bookings/razorpay/verify', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(Object.assign({}, response, { bookingId: booking.bookingId }))
-        });
-        const verify = await verifyRes.json();
-        closeModal();
-        showToast(verify.success
-          ? '🎉 Payment done! Booking ID: ' + booking.bookingId
-          : 'Payment done. Contact us with ID: ' + booking.bookingId);
-        if (verify.success) resetForm();
-      },
-      modal: { ondismiss: function() { showToast('Payment cancelled. Booking saved as pending.'); } }
-    };
-    new Razorpay(options).open();
-  }
-
   async function handleWhatsAppUPI(booking) {
     const name  = document.getElementById('fname').value;
     const phone = document.getElementById('fphone').value;
@@ -697,7 +687,7 @@ fetch(API_URL + '/health').catch(() => {});
     const city  = document.getElementById('fcity').value;
     const notes = document.getElementById('fnotes').value;
     const msg =
-      'Hi HomeServe!%0A%0A' +
+      'Hi All Days Manpower!%0A%0A' +
       '*New Booking Request* %F0%9F%8F%A0%0A%0A' +
       '%F0%9F%93%8B ID: *' + booking.bookingId + '*%0A' +
       '%F0%9F%91%A4 Name: ' + encodeURIComponent(name) + '%0A' +
@@ -706,18 +696,18 @@ fetch(API_URL + '/health').catch(() => {});
       '%F0%9F%93%85 Date: ' + encodeURIComponent(date) + '%0A' +
       '%F0%9F%93%8D City: ' + encodeURIComponent(city) + '%0A' +
       '%F0%9F%93%9D Notes: ' + encodeURIComponent(notes || 'None') + '%0A%0A' +
-      'Please share UPI details for payment.';
+      'UPI ID: leconluke85147%40okhdfcbank';
     const upiAmounts = {'House Cleaning':'499','Electrician':'349','Plumbing':'299','Driver':'199'};
-const amount = upiAmounts[booking.service] || '299';
-const upiLink = 'upi://pay?pa=leconluke85147@okhdfcbank&pn=HomeServe&am=' + amount + '&cu=INR&tn=' + encodeURIComponent(booking.service + ' - ' + booking.bookingId);
-closeModal();
-document.getElementById('upiBookingId').textContent = booking.bookingId;
-document.getElementById('upiPayLink').href = upiLink;
-document.getElementById('upiModal').style.display = 'flex';
-setTimeout(function() { 
-  window.location.href = 'https://wa.me/' + OWNER_WA + '?text=' + msg;
-}, 500);
-resetForm();
+    const amount = upiAmounts[booking.service] || '299';
+    const upiLink = 'upi://pay?pa=leconluke85147@okhdfcbank&pn=AllDaysManpower&am=' + amount + '&cu=INR&tn=' + encodeURIComponent(booking.service + ' - ' + booking.bookingId);
+    document.getElementById('upiBookingId').textContent = booking.bookingId;
+    document.getElementById('upiPayLink').href = upiLink;
+    document.getElementById('upiModal').style.display = 'flex';
+    closeModal();
+    setTimeout(function() {
+      window.location.href = 'https://wa.me/' + OWNER_WA + '?text=' + msg;
+    }, 500);
+    resetForm();
   }
 
   function fallbackWhatsApp() {
@@ -728,7 +718,7 @@ resetForm();
     const city    = document.getElementById('fcity').value;
     const notes   = document.getElementById('fnotes').value;
     const msg =
-      'Hi HomeServe!%0A%0A' +
+      'Hi All Days Manpower!%0A%0A' +
       '*Booking Request* %F0%9F%8F%A0%0A%0A' +
       '%F0%9F%91%A4 Name: ' + encodeURIComponent(name) + '%0A' +
       '%F0%9F%93%9E Phone: ' + encodeURIComponent(phone) + '%0A' +
@@ -738,7 +728,7 @@ resetForm();
       '%F0%9F%93%9D Notes: ' + encodeURIComponent(notes || 'None');
     window.open('https://wa.me/' + OWNER_WA + '?text=' + msg, '_blank');
     closeModal();
-    showToast("Sent to WhatsApp! We'll confirm your booking shortly.");
+    showToast("Sent to WhatsApp! We'll confirm shortly.");
     resetForm();
   }
 
@@ -747,7 +737,7 @@ resetForm();
     const email   = document.getElementById('cemail').value.trim();
     const message = document.getElementById('cmessage').value.trim();
     if (!name || !message) { showToast('Please fill name and message'); return; }
-    const msg = 'Hi HomeServe!%0A%0AName: ' + encodeURIComponent(name) +
+    const msg = 'Hi All Days Manpower!%0A%0AName: ' + encodeURIComponent(name) +
       '%0AEmail: ' + encodeURIComponent(email) +
       '%0AMessage: ' + encodeURIComponent(message);
     window.open('https://wa.me/' + OWNER_WA + '?text=' + msg, '_blank');
