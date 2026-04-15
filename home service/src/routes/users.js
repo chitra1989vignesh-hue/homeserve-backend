@@ -82,3 +82,17 @@ router.patch('/me', verifyToken, async (req, res) => {
 });
 
 module.exports = router;
+
+// ── GET /api/users — Admin: list all users ───────────────────────────
+router.get('/', verifyToken, async (req, res) => {
+  try {
+    const snap = await getDb().collection('users')
+      .orderBy('createdAt', 'desc')
+      .limit(200)
+      .get();
+    const users = snap.docs.map(d => d.data());
+    res.json({ success: true, users, total: users.length });
+  } catch (err) {
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+});

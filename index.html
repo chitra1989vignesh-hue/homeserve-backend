@@ -9,6 +9,33 @@
 <meta property="og:title" content="All Days Manpower Service | Home Services in Puducherry"/>
 <meta property="og:description" content="Professional home services at your doorstep. Book in 60 seconds!"/>
 <meta property="og:type" content="website"/>
+
+<link rel="manifest" href="manifest.json"/>
+<link rel="icon" type="image/jpeg" href="logo.jpg"/>
+<link rel="apple-touch-icon" href="logo.jpg"/>
+<meta name="theme-color" content="#1A47A3"/>
+<!-- Google Analytics — replace G-XXXXXXXXXX with your real ID -->
+<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XXXXXXXXXX');</script> -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "All Days Manpower Service",
+  "description": "Professional home services in Puducherry — house cleaning, electrician, plumbing, and driver services.",
+  "url": "https://alldaysmanpower.in",
+  "telephone": "+917010713811",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Puducherry",
+    "addressRegion": "Puducherry",
+    "addressCountry": "IN"
+  },
+  "openingHours": "Mo-Su 08:00-20:00",
+  "priceRange": "₹199 - ₹499",
+  "serviceArea": ["Puducherry", "Auroville", "Villupuram", "Cuddalore"]
+}
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
 <style>
   :root {
@@ -234,6 +261,40 @@
   .toast::before { content: '✓'; background: var(--blue); width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .75rem; flex-shrink: 0; }
 
   /* ── RESPONSIVE ── */
+
+  /* ── FAQ ── */
+  .faq-list { max-width: 800px; margin: auto; display: flex; flex-direction: column; gap: 1rem; }
+  .faq-item { background: #fff; border: 1.5px solid var(--border); border-radius: 16px; overflow: hidden; transition: border-color .2s; }
+  .faq-item.open { border-color: var(--blue); }
+  .faq-q { padding: 1.2rem 1.5rem; font-weight: 600; font-size: .95rem; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .faq-q::after { content: '+'; font-size: 1.4rem; color: var(--blue); font-weight: 300; flex-shrink: 0; transition: transform .2s; }
+  .faq-item.open .faq-q::after { transform: rotate(45deg); }
+  .faq-a { max-height: 0; overflow: hidden; transition: max-height .3s ease, padding .3s; padding: 0 1.5rem; color: var(--gray); font-size: .9rem; line-height: 1.7; }
+  .faq-item.open .faq-a { max-height: 200px; padding: 0 1.5rem 1.2rem; }
+
+  /* ── SERVICE AREA ── */
+  .areas-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; max-width: 900px; margin: auto; }
+  .area-card { background: #fff; border: 1.5px solid var(--border); border-radius: 16px; padding: 1.2rem; text-align: center; transition: all .2s; }
+  .area-card:hover { border-color: var(--blue); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(26,71,163,.1); }
+  .area-icon { font-size: 1.8rem; margin-bottom: .5rem; }
+  .area-card h4 { font-family: 'Syne', sans-serif; font-size: .95rem; font-weight: 700; }
+  .area-card p { font-size: .78rem; color: var(--gray); margin-top: .2rem; }
+
+  /* ── BOOKING CONFIRM ── */
+  .confirm-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 9998; display: none; align-items: center; justify-content: center; padding: 1rem; backdrop-filter: blur(4px); }
+  .confirm-overlay.show { display: flex; }
+  .confirm-box { background: #fff; border-radius: 24px; padding: 2.5rem; max-width: 420px; width: 100%; text-align: center; animation: popIn .3s ease; }
+  @keyframes popIn { from { transform: scale(.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .confirm-icon { font-size: 3.5rem; margin-bottom: .8rem; }
+  .confirm-box h3 { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 800; margin-bottom: .5rem; }
+  .confirm-box p { color: var(--gray); font-size: .9rem; line-height: 1.6; margin-bottom: 1.5rem; }
+  .confirm-id { background: var(--blue-glow); border: 1.5px solid var(--blue-light); border-radius: 12px; padding: .8rem; margin-bottom: 1.5rem; }
+  .confirm-id span { font-size: .78rem; color: var(--gray); display: block; }
+  .confirm-id strong { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 800; color: var(--blue); }
+  .confirm-btns { display: flex; flex-direction: column; gap: .8rem; }
+  .confirm-close { background: none; border: 1.5px solid var(--border); padding: .7rem; border-radius: 50px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: .9rem; transition: all .2s; }
+  .confirm-close:hover { border-color: var(--blue); color: var(--blue); }
+
   @media (max-width: 900px) {
     .hero-inner { grid-template-columns: 1fr; gap: 2rem; }
     .hero-visual { order: 2; padding: 20px 10px; }
@@ -278,6 +339,8 @@
     <li><a href="#services">Services</a></li>
     <li><a href="#how">How it works</a></li>
     <li><a href="#booking">Book Now</a></li>
+    <li><a href="#areas">Areas</a></li>
+    <li><a href="#faq">FAQ</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
   <div class="nav-right">
@@ -295,6 +358,8 @@
   <a href="#services" onclick="toggleMenu()">Services</a>
   <a href="#how" onclick="toggleMenu()">How it works</a>
   <a href="#booking" onclick="toggleMenu()">Book Now</a>
+  <a href="#areas" onclick="toggleMenu()">Areas</a>
+  <a href="#faq" onclick="toggleMenu()">FAQ</a>
   <a href="#contact" onclick="toggleMenu()">Contact</a>
   <a href="auth.html" onclick="toggleMenu()">My Account</a>
 </div>
@@ -496,6 +561,68 @@
   </div>
 </section>
 
+
+<!-- SERVICE AREA -->
+<section id="areas" style="background:var(--gray-light);">
+  <div class="section-head">
+    <p class="section-label">We Cover</p>
+    <h2 class="section-title">Service Areas</h2>
+    <p class="section-sub">We provide services across Puducherry and nearby areas.</p>
+  </div>
+  <div class="areas-grid">
+    <div class="area-card"><div class="area-icon">📍</div><h4>Puducherry</h4><p>All areas</p></div>
+    <div class="area-card"><div class="area-icon">🌿</div><h4>Auroville</h4><p>Available</p></div>
+    <div class="area-card"><div class="area-icon">🏘️</div><h4>Villupuram</h4><p>Available</p></div>
+    <div class="area-card"><div class="area-icon">🏙️</div><h4>Cuddalore</h4><p>Available</p></div>
+    <div class="area-card"><div class="area-icon">🌊</div><h4>Mahe</h4><p>Available</p></div>
+    <div class="area-card"><div class="area-icon">📌</div><h4>Karaikal</h4><p>Available</p></div>
+  </div>
+  <p style="text-align:center;margin-top:2rem;color:var(--gray);font-size:.9rem;">📞 Not sure if we cover your area? <a href="https://wa.me/917010713811" style="color:var(--blue);font-weight:600;">Ask us on WhatsApp →</a></p>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="section-head">
+    <p class="section-label">Common Questions</p>
+    <h2 class="section-title">FAQs</h2>
+    <p class="section-sub">Everything you need to know before booking.</p>
+  </div>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">How do I book a service?</div>
+      <div class="faq-a">Simply fill out the booking form on our website, choose your preferred date and time, and confirm via WhatsApp or cash payment. We'll get back to you within 30 minutes!</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Are your workers verified and trained?</div>
+      <div class="faq-a">Yes! All our staff are background-verified, trained professionals. We ensure safety and quality with every service.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What areas do you serve?</div>
+      <div class="faq-a">We currently serve Puducherry, Auroville, Villupuram, Cuddalore, Mahe, and Karaikal. Contact us on WhatsApp if you're unsure about your area!</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What payment methods do you accept?</div>
+      <div class="faq-a">We accept Cash on Service (pay when the job is done) and UPI payments (GPay, PhonePe, Paytm). No advance payment required for most services.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Can I cancel or reschedule my booking?</div>
+      <div class="faq-a">Yes! You can cancel or reschedule by contacting us on WhatsApp at least 2 hours before the scheduled time. We'll do our best to accommodate your request.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What if I'm not satisfied with the service?</div>
+      <div class="faq-a">Your satisfaction is our priority! If you're not happy with the service, contact us within 24 hours and we'll arrange a re-service or resolution at no extra cost.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Do you provide services on holidays?</div>
+      <div class="faq-a">Yes! We are available all 7 days of the week including public holidays, from 8:00 AM to 8:00 PM. That's why we're called All Days Manpower!</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">How long does each service take?</div>
+      <div class="faq-a">It depends on the job scope. House cleaning typically takes 2-4 hours, electrical and plumbing visits take 1-2 hours, and driver service is per your requirement.</div>
+    </div>
+  </div>
+</section>
+
 <!-- CONTACT -->
 <section id="contact">
   <div class="contact-wrap">
@@ -580,6 +707,24 @@
     <a id="upiPayLink" href="#" style="display:block;background:#1A47A3;color:#fff;padding:1rem;border-radius:50px;font-weight:700;text-decoration:none;font-size:1rem;margin-bottom:.8rem;">💳 Pay Now via UPI</a>
     <p style="color:#6B7280;font-size:.78rem;margin-bottom:1rem;">Opens GPay / PhonePe / Paytm</p>
     <button onclick="document.getElementById('upiModal').style.display='none'" style="background:none;border:1.5px solid #E5E7EB;padding:.7rem 2rem;border-radius:50px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.9rem;">Close</button>
+  </div>
+</div>
+
+
+<!-- BOOKING CONFIRMATION -->
+<div class="confirm-overlay" id="confirmOverlay">
+  <div class="confirm-box">
+    <div class="confirm-icon">🎉</div>
+    <h3>Booking Confirmed!</h3>
+    <p>Your booking has been received. We'll confirm within <strong>30 minutes</strong> via WhatsApp.</p>
+    <div class="confirm-id">
+      <span>Your Booking ID</span>
+      <strong id="confirmBookingId">HS-XXXXXX</strong>
+    </div>
+    <div class="confirm-btns">
+      <a id="confirmWaBtn" href="#" class="btn-primary" style="text-align:center;" target="_blank">💬 Open WhatsApp</a>
+      <button class="confirm-close" onclick="document.getElementById('confirmOverlay').classList.remove('show')">Close</button>
+    </div>
   </div>
 </div>
 
@@ -680,7 +825,9 @@
       createdBooking = data.booking;
       if (selectedPayMethod === 'cash') {
         closeModal();
-        showToast('Booking confirmed! Pay cash when our team arrives 💵');
+        document.getElementById('confirmBookingId').textContent = createdBooking.bookingId;
+        document.getElementById('confirmWaBtn').href = 'https://wa.me/' + OWNER_WA + '?text=Hi%20All%20Days%20Manpower!%20My%20booking%20ID%20is%20' + createdBooking.bookingId;
+        document.getElementById('confirmOverlay').classList.add('show');
         resetForm();
       } else {
         await handleWhatsAppUPI(createdBooking);
@@ -770,8 +917,30 @@
     setTimeout(function() { t.classList.remove('show'); }, 4000);
   }
 
+
+  // FAQ toggle
+  function toggleFaq(el) {
+    const item = el.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // PWA service worker registration
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('sw.js').catch(function() {});
+    });
+  }
+
   document.getElementById('fdate').min = new Date().toISOString().split('T')[0];
 
   const observer = new IntersectionObserver(function(entries) {
     entries.forEach(function(e) {
-      if (e.isIntersectin
+      if (e.isIntersecting) e.target.style.animation = 'fadeUp .5s ease both';
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.svc-card, .step, .review-card, .pay-card').forEach(function(el) { observer.observe(el); });
+</script>
+</body>
+</html>
